@@ -15,12 +15,13 @@ export interface IAuthFormProps {
   title: string;
   submitText: string;
   type: "login" | "signup";
-  errors: { email: boolean; password: boolean };
-  handleSubmit: ({ email, password }: IHandleSubmit) => Promise<void>;
+  errors: { email: boolean; password: boolean; password2: boolean };
+  handleSubmit: (props: IHandleSubmit) => Promise<void>;
   setErrors: React.Dispatch<
     React.SetStateAction<{
       email: boolean;
       password: boolean;
+      password2: boolean;
     }>
   >;
 }
@@ -29,6 +30,7 @@ export interface IAuthFormProps {
 export interface IHandleSubmit {
   email: string;
   password: string;
+  password2: string;
   onSuccess: () => void;
   onFailure: () => void;
 }
@@ -48,13 +50,16 @@ const AuthForm: React.FC<IAuthFormProps> = ({
   // Local State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
 
   // Calls on handleSubmit success
   const onSuccess = () => {
     if (type === "login") {
-      setEmail("");
-      setPassword("");
+      clearFormState();
       console.log("Successfully logged in and cleared form state");
+    } else if (type === "signup") {
+      clearFormState();
+      console.log("Successfully signed up and cleared form state");
     }
   };
 
@@ -62,17 +67,25 @@ const AuthForm: React.FC<IAuthFormProps> = ({
   const onFailure = () => {
     if (type === "login") {
       console.log("Failed to log in");
+    } else if (type === "signup") {
+      console.log("Failed to sign up user");
     }
   };
 
+  const clearFormState = () => {
+    setEmail("");
+    setPassword("");
+    setPassword2("");
+  };
+
   return (
-    <Card sx={{ width: 300, marginBottom: "200px" }}>
+    <Card sx={{ width: 320, marginBottom: "200px" }}>
       <CardContent>
         <Typography sx={{ mb: 3 }} variant="h4">
           {title}
         </Typography>
         <Stack spacing={3} component="form" autoComplete="off">
-          {type === "login" && (
+          {(type === "login" || type === "signup") && (
             <TextField
               fullWidth
               label="Email"
@@ -86,7 +99,7 @@ const AuthForm: React.FC<IAuthFormProps> = ({
               }}
             />
           )}
-          {type === "login" && (
+          {(type === "login" || type === "signup") && (
             <TextField
               fullWidth
               type="password"
@@ -101,21 +114,49 @@ const AuthForm: React.FC<IAuthFormProps> = ({
               }}
             />
           )}
+          {type === "signup" && (
+            <TextField
+              fullWidth
+              type="password"
+              label="Password Confirmation"
+              value={password2}
+              id="password-input-confirmation"
+              error={errors.password2}
+              helperText={
+                errors.password2 &&
+                "Password confirmation is required & must match password"
+              }
+              onChange={(e) => {
+                setPassword2(e.target.value);
+                setErrors((errors) => ({ ...errors, password2: false }));
+              }}
+            />
+          )}
           <Button
             fullWidth
             variant="contained"
             onClick={() =>
-              handleSubmit({ email, password, onSuccess, onFailure })
+              handleSubmit({ email, password, password2, onSuccess, onFailure })
             }
           >
             {submitText}
           </Button>
         </Stack>
-        <CardActions>
+        <CardActions style={{ display: "flex", justifyContent: "center" }}>
           {type === "login" && (
             <Typography sx={{ m: 2 }}>
               Need an account?
-              <Link to="/signup">Sign Up</Link>
+              <Link style={{ marginLeft: "6px" }} to="/signup">
+                Sign Up
+              </Link>
+            </Typography>
+          )}
+          {type === "signup" && (
+            <Typography sx={{ m: 2 }}>
+              Already have an account?
+              <Link style={{ marginLeft: "6px" }} to="/login">
+                Login
+              </Link>
             </Typography>
           )}
         </CardActions>
