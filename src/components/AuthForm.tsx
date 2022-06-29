@@ -1,6 +1,6 @@
 // Imports
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // MUI
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
@@ -48,29 +48,21 @@ const AuthForm: React.FC<IAuthFormProps> = ({
   handleSubmit,
 }) => {
   // Local State
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("user@roast.com");
+  const [password, setPassword] = useState("123");
   const [password2, setPassword2] = useState("");
+
+  // Hooks
+  const navigate = useNavigate();
 
   // Calls on handleSubmit success
   const onSuccess = () => {
-    if (type === "login") {
-      clearFormState();
-      console.log("Successfully logged in and cleared form state");
-    } else if (type === "signup") {
-      clearFormState();
-      console.log("Successfully signed up and cleared form state");
-    }
+    if (type === "signup") navigate("/", { replace: true });
+    clearFormState();
   };
 
   // Calls on handleSubmit failure
-  const onFailure = () => {
-    if (type === "login") {
-      console.log("Failed to log in");
-    } else if (type === "signup") {
-      console.log("Failed to sign up user");
-    }
-  };
+  const onFailure = () => {};
 
   const clearFormState = () => {
     setEmail("");

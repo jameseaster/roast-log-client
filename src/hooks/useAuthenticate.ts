@@ -1,10 +1,7 @@
 // Imports
 import { useState } from "react";
-import API from "../api/axios";
-import useSnacks from "../hooks/useSnacks";
-import CONSTANTS from "../utils/constants";
 import { IHandleSubmit } from "../components/AuthForm";
-import { useAuthContext } from "../context/AuthProvider";
+import { useAuthContext, ISignout } from "../context/AuthProvider";
 
 /**
  * useAuthenticate
@@ -12,7 +9,8 @@ import { useAuthContext } from "../context/AuthProvider";
  */
 const useAuthenticate = () => {
   // Global State
-  const { setAuth } = useAuthContext();
+  const { sendSigninRequest, sendSignoutRequest, sendSignupRequest } =
+    useAuthContext();
 
   // Local State
   const [errors, setErrors] = useState({
@@ -20,9 +18,6 @@ const useAuthenticate = () => {
     password: false,
     password2: false,
   });
-
-  // Hooks
-  const { createSnack } = useSnacks();
 
   // Handles login form submit
   const signIn = async ({
@@ -33,26 +28,23 @@ const useAuthenticate = () => {
   }: IHandleSubmit) => {
     // Validate
     if (!email.length || !password.length) {
-      return setErrors((errors) => ({
-        ...errors,
-        email: !email.length,
-        password: !password.length,
-      }));
+      const e = { email: !email.length, password: !password.length };
+      return setErrors((errors) => ({ ...errors, ...e }));
     }
-    try {
-      const url = CONSTANTS.API_LOGIN_URL;
-      const body = JSON.stringify({ email, password });
-      const response = await API.post(url, body);
-      console.log(JSON.stringify(response, null, 2));
-      setAuth({ email, loggedIn: true });
-      createSnack("Logged in", "success");
-      onSuccess();
-    } catch (err: any) {
-      // TODO: Handle failed message for bad password
-      setAuth({ email, loggedIn: false });
-      createSnack(`Login failed: ${err?.message}`, "error");
-      onFailure();
-    }
+    await sendSigninRequest({
+      email,
+      password,
+      onSuccess: onSuccess,
+      onFailure: onFailure,
+    });
+  };
+
+  // Handles login form submit
+  const signOut = async ({ onFailure, onSuccess }: ISignout) => {
+    await sendSignoutRequest({
+      onSuccess: onSuccess,
+      onFailure: onFailure,
+    });
   };
 
   // Handles login form submit
@@ -71,24 +63,16 @@ const useAuthenticate = () => {
         password2: !password2.length,
       });
     }
-    try {
-      // Send request
-      const url = CONSTANTS.API_SIGNUP_URL;
-      const body = JSON.stringify({ email, password, password2 });
-      debugger;
-      const response = await API.post(url, body);
-      console.log(JSON.stringify(response, null, 2));
-      setAuth({ email, loggedIn: true });
-      createSnack("Successfully signed up!", "success");
-      onSuccess();
-    } catch (err: any) {
-      setAuth({ email, loggedIn: false });
-      createSnack(`Sign up failed: ${err?.message}`, "error");
-      onFailure();
-    }
+    sendSignupRequest({
+      email,
+      password,
+      password2,
+      onFailure,
+      onSuccess,
+    });
   };
 
-  return { errors, setErrors, signIn, signUp };
+  return { errors, setErrors, signIn, signUp, signOut };
 };
 
 export default useAuthenticate;
