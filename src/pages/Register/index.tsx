@@ -6,27 +6,26 @@ import Container from "@mui/material/Container";
 import useAuthenticate from "../../hooks/useAuthenticate";
 
 // Types
-export interface ISignupProps {}
+export interface IRegisterProps {}
 
 /**
- * Signup Page
- * A form for a user to sign up to the app
+ * Register Page - renders a form for a user to sign up to the app
  */
-const Signup: React.FC<ISignupProps> = () => {
-  const { errors, setErrors, signUp } = useAuthenticate();
+const Register: React.FC<IRegisterProps> = () => {
+  const { errors, setErrors, register } = useAuthenticate();
 
   return (
     <Container sx={classes.container}>
       <AuthForm
-        type="signup"
-        title="Sign Up"
+        type="register"
         errors={errors}
-        submitText="Register"
+        submitText="Submit"
         setErrors={setErrors}
-        handleSubmit={signUp}
+        handleSubmit={register}
+        title="Register Account"
       />
     </Container>
   );
 };
 
-export default Signup;
+export default Register;

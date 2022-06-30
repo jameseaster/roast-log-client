@@ -1,21 +1,20 @@
 // Imports
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
+import Register from "./pages/Register";
+import AppBar from "./components/AppBar";
 import { useAuthContext } from "./context/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import TopNavigation from "./components/TopNavigation";
 
 /**
- * App
- * Top level component
+ * App - top level component
  */
 function App() {
   const { user } = useAuthContext();
   return (
     <>
-      <TopNavigation />
+      <AppBar user={user} />
       <BrowserRouter>
         <Routes>
           <Route
@@ -26,8 +25,8 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="login" element={<Login user={user} />} />
-          <Route path="signup" element={<Signup />} />
+          <Route path="register" element={<Register />} />
+          <Route path="signin" element={<Signin user={user} />} />
         </Routes>
       </BrowserRouter>
     </>

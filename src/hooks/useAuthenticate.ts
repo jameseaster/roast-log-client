@@ -9,7 +9,7 @@ import { useAuthContext, ISignout } from "../context/AuthProvider";
  */
 const useAuthenticate = () => {
   // Global State
-  const { sendSigninRequest, sendSignoutRequest, sendSignupRequest } =
+  const { sendSigninRequest, sendSignoutRequest, sendRegisterRequest } =
     useAuthContext();
 
   // Local State
@@ -19,8 +19,8 @@ const useAuthenticate = () => {
     password2: false,
   });
 
-  // Handles login form submit
-  const signIn = async ({
+  // Handles sign in form submit
+  const signin = async ({
     email,
     password,
     onFailure,
@@ -39,16 +39,16 @@ const useAuthenticate = () => {
     });
   };
 
-  // Handles login form submit
-  const signOut = async ({ onFailure, onSuccess }: ISignout) => {
+  // Handles sign out form submit
+  const signout = async ({ onFailure, onSuccess }: ISignout) => {
     await sendSignoutRequest({
       onSuccess: onSuccess,
       onFailure: onFailure,
     });
   };
 
-  // Handles login form submit
-  const signUp = async ({
+  // Handles register form submit
+  const register = async ({
     email,
     password,
     password2,
@@ -63,7 +63,7 @@ const useAuthenticate = () => {
         password2: !password2.length,
       });
     }
-    sendSignupRequest({
+    sendRegisterRequest({
       email,
       password,
       password2,
@@ -72,7 +72,7 @@ const useAuthenticate = () => {
     });
   };
 
-  return { errors, setErrors, signIn, signUp, signOut };
+  return { errors, setErrors, signin, register, signout };
 };
 
 export default useAuthenticate;

@@ -14,7 +14,7 @@ import CardActions from "@mui/material/CardActions";
 export interface IAuthFormProps {
   title: string;
   submitText: string;
-  type: "login" | "signup";
+  type: "signin" | "register";
   errors: { email: boolean; password: boolean; password2: boolean };
   handleSubmit: (props: IHandleSubmit) => Promise<void>;
   setErrors: React.Dispatch<
@@ -37,7 +37,7 @@ export interface IHandleSubmit {
 
 /**
  * AuthForm
- * Used for logining in, signing up, and resetting passwords
+ * Used for signing in and signing up
  */
 const AuthForm: React.FC<IAuthFormProps> = ({
   type,
@@ -57,7 +57,7 @@ const AuthForm: React.FC<IAuthFormProps> = ({
 
   // Calls on handleSubmit success
   const onSuccess = () => {
-    if (type === "signup") navigate("/", { replace: true });
+    if (type === "register") navigate("/", { replace: true });
     clearFormState();
   };
 
@@ -77,7 +77,7 @@ const AuthForm: React.FC<IAuthFormProps> = ({
           {title}
         </Typography>
         <Stack spacing={3} component="form" autoComplete="off">
-          {(type === "login" || type === "signup") && (
+          {(type === "signin" || type === "register") && (
             <TextField
               fullWidth
               label="Email"
@@ -91,7 +91,7 @@ const AuthForm: React.FC<IAuthFormProps> = ({
               }}
             />
           )}
-          {(type === "login" || type === "signup") && (
+          {(type === "signin" || type === "register") && (
             <TextField
               fullWidth
               type="password"
@@ -106,7 +106,7 @@ const AuthForm: React.FC<IAuthFormProps> = ({
               }}
             />
           )}
-          {type === "signup" && (
+          {type === "register" && (
             <TextField
               fullWidth
               type="password"
@@ -135,19 +135,19 @@ const AuthForm: React.FC<IAuthFormProps> = ({
           </Button>
         </Stack>
         <CardActions style={{ display: "flex", justifyContent: "center" }}>
-          {type === "login" && (
-            <Typography sx={{ m: 2 }}>
+          {type === "signin" && (
+            <Typography sx={{ mt: 2 }}>
               Need an account?
-              <Link style={{ marginLeft: "6px" }} to="/signup">
+              <Link style={{ marginLeft: "6px" }} to="/register">
                 Sign Up
               </Link>
             </Typography>
           )}
-          {type === "signup" && (
-            <Typography sx={{ m: 2 }}>
+          {type === "register" && (
+            <Typography sx={{ mt: 2 }}>
               Already have an account?
-              <Link style={{ marginLeft: "6px" }} to="/login">
-                Login
+              <Link style={{ marginLeft: "6px" }} to="/signin">
+                Sign In
               </Link>
             </Typography>
           )}

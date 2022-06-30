@@ -9,11 +9,11 @@ interface IProtectedRoute {
 }
 
 /**
- * ProtectedRoute - Navigates to login if there is no user
+ * ProtectedRoute - Navigates to sign in page if user is not authenticated
  */
 const ProtectedRoute = ({ user, children }: IProtectedRoute) => {
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/signin" replace />;
   }
 
   return <>{children}</>;

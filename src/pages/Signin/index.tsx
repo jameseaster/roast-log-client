@@ -7,32 +7,33 @@ import Container from "@mui/material/Container";
 import useAuthenticate from "../../hooks/useAuthenticate";
 
 // Types
-export interface ILoginProps {
+export interface ISigninProps {
   user: string;
 }
 
 /**
- * Login Page
- * A form for a user to login to the app
+ * Signin Page - renders a form for a user to sign in to the app
  */
-const Login: React.FC<ILoginProps> = ({ user }: ILoginProps) => {
+const Signin: React.FC<ISigninProps> = ({ user }: ISigninProps) => {
   // Hooks
-  const { errors, setErrors, signIn } = useAuthenticate();
-  // If user is logged in, navigate to home page
+  const { errors, setErrors, signin } = useAuthenticate();
+
+  // If user is authenticated, navigate to home page
   if (user) return <Navigate to="/" replace />;
 
+  // If user is not authenticated, render Sign In form
   return (
     <Container sx={classes.container}>
       <AuthForm
-        type="login"
+        type="signin"
         title="Sign In"
         errors={errors}
-        submitText="Login"
+        submitText="Submit"
         setErrors={setErrors}
-        handleSubmit={signIn}
+        handleSubmit={signin}
       />
     </Container>
   );
 };
 
-export default Login;
+export default Signin;

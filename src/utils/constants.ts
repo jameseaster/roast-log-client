@@ -1,8 +1,26 @@
-const CONSTANTS: { [key: string]: string } = {
-  API_LOGIN_URL: "/auth/login",
-  API_SIGNUP_URL: "/auth/signup",
-  API_LOGOUT_URL: "/auth/logout",
-  API_IS_LOGGED_IN: "/auth/loggedin",
+// API
+interface IApi {
+  signin: string;
+  register: string;
+  signout: string;
+  authenticated: string;
+}
+const api: IApi = {
+  signin: "/auth/signin",
+  signout: "/auth/signout",
+  register: "/auth/register",
+  authenticated: "/auth/authenticated",
 };
 
-export default CONSTANTS;
+// App Bar
+interface IAppbar {
+  title: string;
+}
+const appbar: IAppbar = {
+  title: "ROAST LOG",
+};
+
+// Combine constants
+const constants = { api, appbar };
+
+export default constants;
