@@ -1,11 +1,12 @@
 // Imports
-import CloseIcon from "@mui/icons-material/Close";
-import IconButton from "@mui/material/IconButton";
 import { useSnackbar, VariantType } from "notistack";
+// MUI
+import IconButton from "@mui/material/IconButton";
+// MUI Icons
+import CloseIcon from "@mui/icons-material/Close";
 
 /**
- * useSnacks
- * Returns a hook to generate a snack with a close button
+ * useSnacks - returns a hook to generate snacks with close button
  */
 const useSnacks = () => {
   // Hooks

@@ -1,7 +1,9 @@
 // Imports
 import React from "react";
-import constants from "../../utils/constants";
-import HamburgerButton from "../HamburgerButton";
+import { style } from "./style";
+import { IAppBarProps } from "./types";
+import constants from "utils/constants";
+import HamburgerButton from "components/HamburgerButton";
 // MUI
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
@@ -10,29 +12,10 @@ import { AppBar as AppBarMUI } from "@mui/material";
 // MUI Icons
 import CoffeeIcon from "@mui/icons-material/LocalCafeTwoTone";
 
-// Types
-interface ITopNavProps {
-  user: string;
-}
-
-// styles
-const style = {
-  logoIcon: { display: "flex", mr: 2 },
-  logoTitle: {
-    flexGrow: 1,
-    fontWeight: 700,
-    color: "inherit",
-    display: "flex",
-    fontFamily: "monospace",
-    letterSpacing: ".3rem",
-    textDecoration: "none",
-  },
-};
-
 /**
  * Top Bar is the menu and navigation bar
  */
-const AppBar: React.FC<ITopNavProps> = ({ user }) => {
+const AppBar: React.FC<IAppBarProps> = ({ user }) => {
   return (
     <AppBarMUI position="static">
       <Container maxWidth="xl">

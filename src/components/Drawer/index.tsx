@@ -1,7 +1,9 @@
 // Imports
-import React, { KeyboardEvent, MouseEvent } from "react";
-import useAuthenticate from "../../hooks/useAuthenticate";
-import { useAuthContext } from "../../context/AuthProvider";
+import React from "react";
+import { style } from "./style";
+import { IDrawer } from "./types";
+import { useAuthContext } from "state/authContext";
+import useAuthenticate from "hooks/useAuthenticate";
 // MUI
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -12,30 +14,14 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import { Drawer as DrawerMUI, Typography } from "@mui/material";
 // MUI Icons
-import MailIcon from "@mui/icons-material/Mail";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-
-// Types
-interface IDrawer {
-  open: boolean;
-  toggleDrawer: (state: boolean) => (event: KeyboardEvent | MouseEvent) => void;
-}
-
-// Style
-const style = {
-  username: {
-    display: "flex",
-    height: "70px",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-};
+import MailIcon from "@mui/icons-material/Mail"; // TODO: UPDATE
+import InboxIcon from "@mui/icons-material/MoveToInbox"; // TODO: UPDATE
 
 /**
  * Drawer offers user menu options
  */
 const Drawer: React.FC<IDrawer> = ({ open, toggleDrawer }) => {
-  // Global state
+  // Auth
   const { user } = useAuthContext();
 
   // Hooks

@@ -1,21 +1,20 @@
 // Imports
-import classes from "./styles";
-import AuthForm from "../../components/AuthForm";
+import { style } from "./style";
+import { IRegisterProps } from "./types";
+import AuthForm from "components/AuthForm";
+import useAuthenticate from "hooks/useAuthenticate";
 // MUI Imports
 import Container from "@mui/material/Container";
-import useAuthenticate from "../../hooks/useAuthenticate";
-
-// Types
-export interface IRegisterProps {}
 
 /**
  * Register Page - renders a form for a user to sign up to the app
  */
 const Register: React.FC<IRegisterProps> = () => {
+  // Hooks
   const { errors, setErrors, register } = useAuthenticate();
 
   return (
-    <Container sx={classes.container}>
+    <Container sx={style.container}>
       <AuthForm
         type="register"
         errors={errors}

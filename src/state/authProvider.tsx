@@ -1,46 +1,10 @@
 // Imports
-import React, { useState, useEffect } from "react";
-import API from "../api/axios";
-import constants from "../utils/constants";
-import useSnacks from "../hooks/useSnacks";
-
-// Types
-interface ISignin {
-  email: string;
-  password: string;
-  onSuccess?: VoidFunction;
-  onFailure?: (err: any) => void;
-}
-
-export interface ISignout {
-  onSuccess?: VoidFunction;
-  onFailure?: (err: any) => void;
-}
-
-export interface IRegister {
-  email: string;
-  password: string;
-  password2: string;
-  onSuccess?: VoidFunction;
-  onFailure?: (err: any) => void;
-}
-
-interface IAuthContext {
-  user: string;
-  sendSigninRequest: (props: ISignin) => Promise<void>;
-  sendSignoutRequest: (props: ISignout) => Promise<void>;
-  sendRegisterRequest: (props: IRegister) => Promise<void>;
-}
-
-interface IAuthProviderProps {
-  children: React.ReactNode | React.ReactNode[];
-}
-
-// Auth Default Context
-const AuthContext = React.createContext<IAuthContext>(null!);
-
-// Create Auth Context
-export const useAuthContext = () => React.useContext(AuthContext);
+import API from "api/axios";
+import constants from "utils/constants";
+import useSnacks from "hooks/useSnacks";
+import { AuthContext } from "./authContext";
+import { useState, useEffect } from "react";
+import { ISignin, ISignout, IRegister, IAuthProviderProps } from "./authTypes";
 
 /**
  * Auth Provider Component
@@ -49,7 +13,12 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
   // State
   const [user, setUser] = useState<string>("");
 
-  // See if user is signed in
+  // Hooks
+  const { createSnack } = useSnacks();
+
+  /**
+   * Checks if user is signed in
+   */
   useEffect(() => {
     const isAuthenticated = async () => {
       try {
@@ -64,10 +33,9 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     isAuthenticated();
   }, []);
 
-  // Hooks
-  const { createSnack } = useSnacks();
-
-  // Signs a user in
+  /**
+   * Sends a sign in request to server
+   */
   const sendSigninRequest = async ({
     email,
     password,
@@ -91,7 +59,9 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     }
   };
 
-  // Sends a register user request
+  /**
+   * Sends a register request to server
+   */
   const sendRegisterRequest = async ({
     email,
     password,
@@ -119,7 +89,9 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     }
   };
 
-  // Signs a user out
+  /**
+   * Sends a sign out request to server
+   */
   const sendSignoutRequest = async ({ onSuccess, onFailure }: ISignout) => {
     try {
       const url = constants.api.signout;

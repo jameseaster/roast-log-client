@@ -1,10 +1,8 @@
-const classes = {
-  container: {
-    height: "100vh",
+export const style = {
+  username: {
     display: "flex",
+    height: "70px",
     alignItems: "center",
     justifyContent: "center",
   },
 };
-
-export default classes;

@@ -1,29 +1,25 @@
 // Imports
-import classes from "./styles";
+import { style } from "./style";
+import { ISigninProps } from "./types";
+import AuthForm from "components/AuthForm";
 import { Navigate } from "react-router-dom";
-import AuthForm from "../../components/AuthForm";
+import useAuthenticate from "hooks/useAuthenticate";
 // MUI Imports
 import Container from "@mui/material/Container";
-import useAuthenticate from "../../hooks/useAuthenticate";
-
-// Types
-export interface ISigninProps {
-  user: string;
-}
 
 /**
  * Signin Page - renders a form for a user to sign in to the app
  */
-const Signin: React.FC<ISigninProps> = ({ user }: ISigninProps) => {
+const Signin: React.FC<ISigninProps> = ({ user }) => {
   // Hooks
   const { errors, setErrors, signin } = useAuthenticate();
 
-  // If user is authenticated, navigate to home page
+  // If authenticated, navigate to home page
   if (user) return <Navigate to="/" replace />;
 
-  // If user is not authenticated, render Sign In form
+  // If not authenticated, render Sign In form
   return (
-    <Container sx={classes.container}>
+    <Container sx={style.container}>
       <AuthForm
         type="signin"
         title="Sign In"

@@ -1,4 +1,4 @@
-const classes = {
+export const style = {
   container: {
     height: "100vh",
     display: "flex",
@@ -6,5 +6,3 @@ const classes = {
     justifyContent: "center",
   },
 };
-
-export default classes;

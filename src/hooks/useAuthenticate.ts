@@ -1,11 +1,11 @@
 // Imports
 import { useState } from "react";
-import { IHandleSubmit } from "../components/AuthForm";
-import { useAuthContext, ISignout } from "../context/AuthProvider";
+import { ISignout } from "state/authTypes";
+import { useAuthContext } from "state/authContext";
+import { IHandleSubmit } from "components/AuthForm/types";
 
 /**
- * useAuthenticate
- * Returns functions to authenticate user
+ * useAuthenticate - returns functions to validate auth requests
  */
 const useAuthenticate = () => {
   // Global State

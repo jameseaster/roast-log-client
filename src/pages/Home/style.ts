@@ -1,4 +1,4 @@
-const classes = {
+export const style = {
   card: {
     width: 320,
     marginBottom: "200px",
@@ -10,5 +10,3 @@ const classes = {
     justifyContent: "center",
   },
 };
-
-export default classes;

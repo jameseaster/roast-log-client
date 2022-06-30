@@ -1,23 +1,13 @@
 // Imports
+import { style } from "./style";
+import Drawer from "components/Drawer";
+import { IHamBtnProps } from "./types";
 import React, { KeyboardEvent, MouseEvent } from "react";
-import Drawer from "../Drawer";
 // MUI
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 // MUI Icons
 import Menu from "@mui/icons-material/Menu";
-
-// Types
-interface IHamBtnProps {}
-
-// Style
-const style = {
-  hamButton: {
-    p: 0,
-    mr: -1,
-    color: "white",
-  },
-};
 
 /**
  * Hamburger Menu - used in the top right of the AppBar

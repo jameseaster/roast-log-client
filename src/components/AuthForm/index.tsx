@@ -1,5 +1,7 @@
 // Imports
+import { style } from "./style";
 import React, { useState } from "react";
+import { IAuthFormProps } from "./types";
 import { Link, useNavigate } from "react-router-dom";
 // MUI
 import Card from "@mui/material/Card";
@@ -9,31 +11,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-
-// Types
-export interface IAuthFormProps {
-  title: string;
-  submitText: string;
-  type: "signin" | "register";
-  errors: { email: boolean; password: boolean; password2: boolean };
-  handleSubmit: (props: IHandleSubmit) => Promise<void>;
-  setErrors: React.Dispatch<
-    React.SetStateAction<{
-      email: boolean;
-      password: boolean;
-      password2: boolean;
-    }>
-  >;
-}
-
-// Handle submit parameter types
-export interface IHandleSubmit {
-  email: string;
-  password: string;
-  password2: string;
-  onSuccess: () => void;
-  onFailure: () => void;
-}
 
 /**
  * AuthForm
@@ -55,15 +32,16 @@ const AuthForm: React.FC<IAuthFormProps> = ({
   // Hooks
   const navigate = useNavigate();
 
-  // Calls on handleSubmit success
+  // Called on handleSubmit success
   const onSuccess = () => {
     if (type === "register") navigate("/", { replace: true });
     clearFormState();
   };
 
-  // Calls on handleSubmit failure
+  // Called on handleSubmit failure
   const onFailure = () => {};
 
+  // Clears all local form state
   const clearFormState = () => {
     setEmail("");
     setPassword("");
@@ -71,7 +49,7 @@ const AuthForm: React.FC<IAuthFormProps> = ({
   };
 
   return (
-    <Card sx={{ width: 320, marginBottom: "200px" }}>
+    <Card sx={style.card}>
       <CardContent>
         <Typography sx={{ mb: 3 }} variant="h4">
           {title}

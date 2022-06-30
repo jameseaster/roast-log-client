@@ -1,12 +1,6 @@
 // Imports
-import React from "react";
+import { IProtectedRoute } from "./types";
 import { Navigate } from "react-router-dom";
-
-// Types
-interface IProtectedRoute {
-  user: string;
-  children: React.ReactNode;
-}
 
 /**
  * ProtectedRoute - Navigates to sign in page if user is not authenticated
