@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import { useAuthContext } from "./context/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import TopNavigation from "./components/TopNavigation";
 
 /**
  * App
@@ -13,20 +14,23 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
   const { user } = useAuthContext();
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute user={user}>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="login" element={<Login user={user} />} />
-        <Route path="signup" element={<Signup />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <TopNavigation />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute user={user}>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="login" element={<Login user={user} />} />
+          <Route path="signup" element={<Signup />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
