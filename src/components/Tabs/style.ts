@@ -7,6 +7,7 @@ export const style = {
     WebkitBoxShadow: "0 4px 6px -6px #222", // TODO: add to theme
   },
   tabs: {
+    backgroundColor: "#FAFAFA", // TODO: ADD TO THEME
     "& .MuiTabs-indicator": {
       display: "flex",
       justifyContent: "center",
@@ -15,7 +16,7 @@ export const style = {
     "& .indicator-div": {
       maxWidth: 100,
       width: "100%",
-      backgroundColor: "primary.main",
+      backgroundColor: "secondary.main",
     },
   },
 };

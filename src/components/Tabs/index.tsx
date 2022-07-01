@@ -26,6 +26,7 @@ const Tabs: React.FC<ITabs> = ({ pages }) => {
         <TabsMUI
           centered
           value={value}
+          indicatorColor="secondary"
           aria-label="basic tabs example"
           sx={isNotSmall ? style.tabs : {}}
           onChange={(e, i) => handleChange(i)}
