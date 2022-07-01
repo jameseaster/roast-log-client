@@ -14,7 +14,7 @@ const root = createRoot(rootElement!);
 root.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <SnackbarProvider>
+    <SnackbarProvider autoHideDuration={3500}>
       <AuthProvider>
         <App />
       </AuthProvider>

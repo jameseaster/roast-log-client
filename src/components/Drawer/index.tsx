@@ -31,12 +31,14 @@ const Drawer: React.FC<IDrawer> = ({ open, toggleDrawer }) => {
   const menuOptions = [
     {
       id: 1,
+      disabled: true,
       text: "Profile",
       renderIcon: () => <InboxIcon />,
       handleClick: () => alert("Edit profile modal?"),
     },
     {
       id: 2,
+      disabled: false,
       text: "Sign Out",
       renderIcon: () => <MailIcon />,
       handleClick: () => signout({}),
@@ -56,14 +58,16 @@ const Drawer: React.FC<IDrawer> = ({ open, toggleDrawer }) => {
         </Box>
         <Divider />
         <List>
-          {menuOptions.map(({ id, text, renderIcon, handleClick }) => (
-            <ListItem key={id} disablePadding>
-              <ListItemButton onClick={handleClick}>
-                <ListItemIcon>{renderIcon()}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {menuOptions.map(
+            ({ id, text, renderIcon, handleClick, disabled }) => (
+              <ListItem key={id} disablePadding>
+                <ListItemButton onClick={handleClick} disabled={disabled}>
+                  <ListItemIcon>{renderIcon()}</ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            )
+          )}
         </List>
       </Box>
     </DrawerMUI>
