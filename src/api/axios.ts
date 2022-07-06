@@ -8,4 +8,7 @@ const API = axios.create({
   },
 });
 
+// Get signed in user's roasts
+export const getRoasts = () => API.get("/roasts");
+
 export default API;

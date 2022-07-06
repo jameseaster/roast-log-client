@@ -9,4 +9,8 @@ export const style = {
     alignItems: "center",
     justifyContent: "center",
   },
+  table: {
+    width: "100%",
+    height: "75vh",
+  },
 };
