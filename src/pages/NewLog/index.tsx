@@ -2,12 +2,9 @@
 import React from "react";
 import { style } from "./style";
 import { INewLogProps } from "./types";
+import LogForm from "components/LogForm";
 // MUI Imports
-import Card from "@mui/material/Card";
-import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import CardContent from "@mui/material/CardContent";
 
 /**
  * NewLog Page
@@ -15,13 +12,7 @@ import CardContent from "@mui/material/CardContent";
 const NewLog: React.FC<INewLogProps> = () => {
   return (
     <Container sx={style.container}>
-      <Card sx={style.card}>
-        <CardContent>
-          <Stack spacing={2}>
-            <Typography variant="h4">New Log Page</Typography>
-          </Stack>
-        </CardContent>
-      </Card>
+      <LogForm />
     </Container>
   );
 };

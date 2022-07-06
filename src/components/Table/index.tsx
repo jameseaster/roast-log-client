@@ -10,11 +10,10 @@ export default function Table({ rows }: ITableProps) {
   return (
     <DataGrid
       rows={rows}
-      pageSize={5}
+      pageSize={10}
       columns={columns}
-      checkboxSelection
       disableSelectionOnClick
-      rowsPerPageOptions={[5]}
+      rowsPerPageOptions={[10]}
     />
   );
 }

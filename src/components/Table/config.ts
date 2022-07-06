@@ -7,40 +7,58 @@ export const columns: GridColDef[] = [
   {
     field: "roast_number",
     headerName: "#",
-    width: 50,
+    width: 60,
   },
   {
-    field: "coffee_origin",
-    headerName: "Origin",
-    width: 300,
+    field: "country",
+    headerName: "Country",
+    width: 100,
+  },
+  {
+    field: "region",
+    headerName: "Region",
+    width: 150,
   },
   {
     align: "center",
+    headerAlign: "center",
+    width: 85,
+    field: "process",
+    headerName: "Process",
+  },
+  {
+    align: "center",
+    headerAlign: "center",
     field: "date",
     headerName: "Date",
+    width: 120,
     valueGetter: ({ row }: GridValueGetterParams) =>
       `${formatDateString(row.date)}`,
   },
   {
     align: "center",
+    headerAlign: "center",
     field: "time",
     headerName: "Time",
     valueGetter: ({ row }: GridValueGetterParams) => `${formatTime(row.time)}`,
   },
   {
     align: "center",
+    headerAlign: "center",
     field: "green_weight",
     headerName: "Green",
     valueGetter: ({ row }: GridValueGetterParams) => `${row.green_weight} g`,
   },
   {
     align: "center",
+    headerAlign: "center",
     field: "roasted_weight",
     headerName: "Roasted",
     valueGetter: ({ row }: GridValueGetterParams) => `${row.roasted_weight} g`,
   },
   {
     align: "center",
+    headerAlign: "center",
     field: "percentage",
     headerName: "Loss %",
     description: "Percentage lossed from green to roasted weight.",
@@ -49,6 +67,7 @@ export const columns: GridColDef[] = [
   },
   {
     align: "center",
+    headerAlign: "center",
     field: "first_crack",
     headerName: "First Crack",
     valueGetter: ({ row }: GridValueGetterParams) =>
@@ -56,6 +75,7 @@ export const columns: GridColDef[] = [
   },
   {
     align: "center",
+    headerAlign: "center",
     field: "cool_down",
     headerName: "Cool Down",
     valueGetter: ({ row }: GridValueGetterParams) =>
@@ -63,6 +83,7 @@ export const columns: GridColDef[] = [
   },
   {
     align: "center",
+    headerAlign: "center",
     field: "vac_to_250",
     headerName: "Vac to 250°",
     valueGetter: ({ row }: GridValueGetterParams) => `${row.vac_to_250 > 0}`,

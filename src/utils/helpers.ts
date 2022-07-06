@@ -1,3 +1,6 @@
+// Imports
+import constants from "utils/constants";
+
 /**
  * Takes in time "00:00:00" and returns readable format
  */
@@ -22,5 +25,5 @@ export const formatRoastTimes = (time: number) => {
  */
 export const formatDateString = (date: string) => {
   const [year, month, day] = date.slice(0, 10).split("-");
-  return `${month}.${day}.${year}`;
+  return `${constants.general.months[+month]} ${+day}, ${year}`;
 };
