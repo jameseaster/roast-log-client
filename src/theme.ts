@@ -20,3 +20,5 @@ const theme = createTheme({
 });
 
 export default theme;
+
+// light gray - rgba(0, 0, 0, 0.23)

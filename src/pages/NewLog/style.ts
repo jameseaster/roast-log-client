@@ -4,8 +4,8 @@ export const style = {
     marginBottom: "200px",
   },
   container: {
-    height: "100vh",
     display: "flex",
+    minHeight: "100vh",
     justifyContent: "center",
   },
 };
