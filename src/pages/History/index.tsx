@@ -11,13 +11,14 @@ import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import CardContent from "@mui/material/CardContent";
+import constants from "utils/constants";
 
 /**
  * History Page
  */
 const History: React.FC<IHistoryProps> = () => {
   // Fetch roast data
-  const query = useQuery("roasts", getRoasts);
+  const query = useQuery(constants.reactQuery.allRoasts, getRoasts);
 
   return (
     <Container
@@ -46,8 +47,12 @@ const History: React.FC<IHistoryProps> = () => {
       )}
 
       {/* Data table */}
-      {!query.isLoading && !query.isError && query.data?.data && (
-        <Table rows={query.data?.data || []} />
+      {!query.isLoading && !query.isError && query.data && (
+        <Card sx={style.tableCard}>
+          <CardContent sx={style.tableCardContent}>
+            <Table rows={query.data || []} />
+          </CardContent>
+        </Card>
       )}
     </Container>
   );

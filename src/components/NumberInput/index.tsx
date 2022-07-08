@@ -13,13 +13,15 @@ const NumberInput: React.FC<INumberInputProps> = ({
   label,
   value,
   width,
+  error,
+  intOnly,
   setValue,
   adornment,
   placeholder,
   adornmentPosition,
 }) => {
   // Local State
-  const [error, setError] = useState<string>("");
+  const [validationError, setValidationError] = useState<string>("");
 
   /**
    * Handles change for number values only
@@ -29,20 +31,27 @@ const NumberInput: React.FC<INumberInputProps> = ({
     const decCount = (valueStr.match(/\./g) || []).length;
     // Turns string into float to compare to max
     const valueNum = parseFloat(valueStr);
+    // Does not allow decimal numbers if intOnly is true
+    if (intOnly && decCount) return;
     // Only allows one decimal to be typed into input string
     if (decCount > 1) return;
+    // Prevents multiple zeros before the decimal
+    if (valueStr[0] === "0" && valueStr[1] === "0")
+      valueStr = valueStr.slice(1);
     // If string starts with "0" and is not < 1, remove the zero
-    if (valueStr[0] === "0" && valueNum > 1) valueStr = valueStr.slice(1);
+    if (valueStr[0] === "0" && valueNum >= 1) valueStr = valueStr.slice(1);
     // If string starts with decimal, add a "0" to the beginning
     if (valueStr[0] === ".") valueStr = "0" + valueStr;
     // If value string is empty, replace with "0"
     if (valueStr === "") {
-      setError("");
+      setValidationError("");
       return setValue("0");
     }
     // If value string is a number, check error with max & set value
     if (!isNaN(Number(valueStr))) {
-      setError(valueNum > max ? `Value must be between 0 - ${max}` : "");
+      setValidationError(
+        valueNum > max ? `Value must be between 0 - ${max}` : ""
+      );
       setValue(valueStr.trim());
     }
     // Set error to decimal places after hundredths
@@ -52,7 +61,7 @@ const NumberInput: React.FC<INumberInputProps> = ({
         valueStr[valueStr.length - 2] !== "." &&
         valueStr[valueStr.length - 3] !== "."
       ) {
-        setError("Only two decimal places are allow");
+        setValidationError("Only two decimal places are allow");
       }
     }
   };
@@ -84,12 +93,12 @@ const NumberInput: React.FC<INumberInputProps> = ({
     <TextField
       value={value}
       label={label}
-      helperText={error}
-      error={!!error.length}
+      sx={{ width }}
+      helperText={validationError}
       id="input-with-adornment"
-      sx={{ width: width || 300 }}
       InputProps={getInputProps()}
       placeholder={placeholder || ""}
+      error={!!validationError.length || error}
       onChange={({ target }) => handleChange(target.value)}
     />
   );

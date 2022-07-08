@@ -63,7 +63,7 @@ export const columns: GridColDef[] = [
     headerName: "Loss %",
     description: "Percentage lossed from green to roasted weight.",
     valueGetter: ({ row }: GridValueGetterParams) =>
-      `${(1 - row.roasted_weight / row.green_weight) * 100}`,
+      `${((1 - row.roasted_weight / row.green_weight) * 100).toFixed(1)}`,
   },
   {
     align: "center",

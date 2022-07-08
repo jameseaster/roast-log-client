@@ -1,7 +1,8 @@
 export const style = {
   card: {
-    width: 320,
-    marginBottom: "200px",
+    width: "100%",
+    maxWidth: 650,
+    minWidth: 300,
   },
   container: {
     display: "flex",

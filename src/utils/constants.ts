@@ -2,16 +2,22 @@
  * API
  */
 interface IApi {
+  baseUrl: string;
   signin: string;
-  register: string;
   signout: string;
+  register: string;
   authenticated: string;
+  getRoasts: string;
+  createRoast: string;
 }
 const api: IApi = {
+  baseUrl: "http://localhost:8080/API",
   signin: "/auth/signin",
   signout: "/auth/signout",
   register: "/auth/register",
   authenticated: "/auth/authenticated",
+  getRoasts: "/roasts",
+  createRoast: "/roasts",
 };
 
 /**
@@ -33,6 +39,17 @@ interface ILog {
 
 const log: ILog = {
   options: ["Dry", "Wet", "Honey"],
+};
+
+/**
+ * React Query
+ */
+interface IReactQuery {
+  allRoasts: string;
+}
+
+const reactQuery: IReactQuery = {
+  allRoasts: "allRoasts",
 };
 
 /**
@@ -62,6 +79,6 @@ const general: IGeneral = {
 /**
  * Combine constants
  */
-const constants = { api, appbar, log, general };
+const constants = { api, appbar, log, reactQuery, general };
 
 export default constants;

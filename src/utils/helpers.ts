@@ -27,3 +27,32 @@ export const formatDateString = (date: string) => {
   const [year, month, day] = date.slice(0, 10).split("-");
   return `${constants.general.months[+month]} ${+day}, ${year}`;
 };
+
+/**
+ * Returns date string formatted for database value
+ */
+export const getDate = (dateTime: Date | null) => {
+  if (dateTime === null) return "";
+  const yyyy = dateTime.getFullYear();
+  let mm = String(dateTime.getMonth() + 1); // Months start at 0
+  let dd = String(dateTime.getDate());
+  // Add zero if necessary
+  if (Number(dd) < 10) dd = "0" + dd;
+  if (Number(mm) < 10) mm = "0" + mm;
+  return `${yyyy}-${dd}-${mm}`;
+};
+
+/**
+ * Returns time string formatted for database value
+ */
+export const getTime = (dateTime: Date | null) => {
+  if (dateTime === null) return "";
+  let hh = String(dateTime.getHours());
+  let mm = String(dateTime.getMinutes());
+  let ss = String(dateTime.getSeconds());
+  // Add zero if necessary
+  if (Number(hh) < 10) hh = "0" + hh;
+  if (Number(mm) < 10) mm = "0" + mm;
+  if (Number(ss) < 10) ss = "0" + ss;
+  return `${hh}:${mm}:${ss}`;
+};

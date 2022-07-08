@@ -19,17 +19,19 @@ const ToggleButton: React.FC<IToggleButtonProps> = ({
   handleChange,
 }) => {
   return (
-    <Container sx={{ ...style.container, width: width || 300 }}>
-      <Typography>{label}</Typography>
-      <ToggleButtonMUI
-        value="check"
-        color={color}
-        selected={selected}
-        sx={style.toggleBtn}
-        onChange={handleChange}
-      >
-        <CheckIcon sx={{ color: selected ? "" : "transparent" }} />
-      </ToggleButtonMUI>
+    <Container sx={{ ...style.container, width }}>
+      <Container sx={{ ...style.toggle }}>
+        <Typography>{label}</Typography>
+        <ToggleButtonMUI
+          value="check"
+          color={color}
+          selected={selected}
+          sx={style.toggleBtn}
+          onChange={handleChange}
+        >
+          <CheckIcon sx={{ color: selected ? "" : "transparent" }} />
+        </ToggleButtonMUI>
+      </Container>
     </Container>
   );
 };

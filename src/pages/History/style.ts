@@ -11,6 +11,12 @@ export const style = {
   },
   table: {
     width: "100%",
-    height: "75vh",
+    height: "80vh",
+  },
+  tableCard: {
+    height: "100%",
+  },
+  tableCardContent: {
+    height: "94%",
   },
 };

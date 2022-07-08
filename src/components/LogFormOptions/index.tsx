@@ -3,32 +3,26 @@ import React from "react";
 import { style } from "./style";
 import Dialog from "components/Dialog";
 import { ILogFormOptionsProps } from "./types";
-import ToggleButton from "components/ToggleButton";
 // MUI
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Button from "@mui/material/Button";
 
 /**
  * LogFormOptions - dialog window for log form options
  */
 const LogFormOptions: React.FC<ILogFormOptionsProps> = ({
-  width,
-  importData,
   openOptions,
   geneCafeTime,
-  setImportData,
   setOpenOptions,
   setGeneCafeTime,
+  handleImportData,
 }) => {
   // Event Handlers
   const handleGeneSwitchToggle = () => {
     setGeneCafeTime((v) => !v);
-  };
-
-  const handleImportData = () => {
-    console.log("Import previous roast values");
   };
 
   const handleApplyGeneCafeTimeConversion = () => {
@@ -37,7 +31,6 @@ const LogFormOptions: React.FC<ILogFormOptionsProps> = ({
 
   const handleConfirmOptionChange = () => {
     if (geneCafeTime) handleApplyGeneCafeTimeConversion();
-    if (importData) handleImportData();
     setOpenOptions((v) => !v);
   };
 
@@ -70,13 +63,7 @@ const LogFormOptions: React.FC<ILogFormOptionsProps> = ({
           />
         </FormGroup>
         {/* Import Previous Roast Data */}
-        <ToggleButton
-          color="success"
-          width={width || 350}
-          selected={importData}
-          label={"Import Previous Roast Data"}
-          handleChange={() => setImportData((v) => !v)}
-        />
+        <Button onClick={handleImportData}>Import Previous Roast Data</Button>
       </Stack>
     </Dialog>
   );

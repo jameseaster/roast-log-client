@@ -13,6 +13,7 @@ import {
  * AutoComplete
  */
 const AutoComplete: React.FC<IAutoCompleteProps> = ({
+  error,
   label,
   width,
   value,
@@ -33,12 +34,14 @@ const AutoComplete: React.FC<IAutoCompleteProps> = ({
       <AutoCompleteMUI
         disablePortal
         value={value}
+        sx={{ width }}
         options={options}
         id={`${label}-box`}
-        sx={{ width: width || 300 }}
         filterOptions={filterOptions}
         onChange={(e, v) => setValue(v)}
-        renderInput={(params) => <TextField {...params} label={label} />}
+        renderInput={(params) => (
+          <TextField {...params} error={error} label={label} />
+        )}
       />
     </div>
   );

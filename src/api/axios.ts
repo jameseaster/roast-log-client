@@ -1,14 +1,36 @@
 import axios from "axios";
+import constants from "utils/constants";
+
+interface IRoastRequestData {
+  date: string;
+  time: string;
+  region: string;
+  process: string;
+  country: string;
+  cool_down: number;
+  vac_to_250: number;
+  first_crack: number;
+  roast_number: number;
+  green_weight: number;
+  roasted_weight: number;
+}
 
 const API = axios.create({
   withCredentials: true,
-  baseURL: "http://localhost:8080/API",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: constants.api.baseUrl,
+  headers: { "Content-Type": "application/json" },
 });
 
 // Get signed in user's roasts
-export const getRoasts = () => API.get("/roasts");
+export const getRoasts = async () => {
+  const response = await API.get(constants.api.getRoasts);
+  return response.data;
+};
+
+// Sends post request to create new roast
+export const createRoast = async (roastData: IRoastRequestData) => {
+  const response = await API.post(constants.api.createRoast, roastData);
+  return response;
+};
 
 export default API;

@@ -6,6 +6,8 @@ import { AuthContext } from "./authContext";
 import { useState, useEffect } from "react";
 import { ISignin, ISignout, IRegister, IAuthProviderProps } from "./authTypes";
 
+// TODO: CONVERT TO REACT QUERY //
+
 /**
  * Auth Provider Component
  */
