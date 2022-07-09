@@ -23,13 +23,19 @@ const API = axios.create({
 
 // Get signed in user's roasts
 export const getRoasts = async () => {
-  const response = await API.get(constants.api.getRoasts);
+  const response = await API.get(constants.api.roasts);
   return response.data;
 };
 
 // Sends post request to create new roast
 export const createRoast = async (roastData: IRoastRequestData) => {
-  const response = await API.post(constants.api.createRoast, roastData);
+  const response = await API.post(constants.api.roasts, roastData);
+  return response;
+};
+
+// Sends patch request to create new roast
+export const updateRoast = async (roastData: IRoastRequestData) => {
+  const response = await API.patch(constants.api.roasts, roastData);
   return response;
 };
 

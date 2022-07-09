@@ -6,7 +6,6 @@ export const style = {
   },
   container: {
     display: "flex",
-    minHeight: "100vh",
     justifyContent: "center",
   },
 };

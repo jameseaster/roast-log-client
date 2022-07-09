@@ -2,22 +2,20 @@
  * API
  */
 interface IApi {
-  baseUrl: string;
+  roasts: string;
   signin: string;
+  baseUrl: string;
   signout: string;
   register: string;
   authenticated: string;
-  getRoasts: string;
-  createRoast: string;
 }
 const api: IApi = {
-  baseUrl: "http://localhost:8080/API",
+  roasts: "/roasts",
   signin: "/auth/signin",
   signout: "/auth/signout",
   register: "/auth/register",
   authenticated: "/auth/authenticated",
-  getRoasts: "/roasts",
-  createRoast: "/roasts",
+  baseUrl: "http://localhost:8080/API",
 };
 
 /**

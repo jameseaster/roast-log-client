@@ -4,10 +4,11 @@ import { style } from "./style";
 import { INewLogProps } from "./types";
 import LogForm from "components/LogForm";
 import useLogForm from "hooks/useLogForm";
-// MUI Imports
-import Container from "@mui/material/Container";
-import { Card, CardContent } from "@mui/material";
 import LogFormHeader from "components/LogFormHeader";
+// MUI Imports
+import Card from "@mui/material/Card";
+import Container from "@mui/material/Container";
+import CardContent from "@mui/material/CardContent";
 
 /**
  * NewLog Page
@@ -39,7 +40,7 @@ const NewLog: React.FC<INewLogProps> = () => {
             errors={errors}
             submitForm={submitForm}
             updateForm={updateForm}
-            loadingPostReq={loadingPostReq}
+            loading={loadingPostReq}
             formIsIncomplete={formIsIncomplete}
           />
         </CardContent>

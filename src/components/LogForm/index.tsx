@@ -17,10 +17,11 @@ import TextField from "@mui/material/TextField";
 // Types
 export interface ILogFormProps {
   form: IFormState;
+  loading: boolean;
   errors: IErrorState;
-  loadingPostReq: boolean;
-  submitForm: VoidFunction;
+  submitForm?: VoidFunction;
   formIsIncomplete: boolean;
+  hideSubmitButton?: boolean;
   updateForm: (key: keyof IFormState) => (value: any) => void;
 }
 
@@ -30,15 +31,16 @@ export interface ILogFormProps {
 const LogForm: React.FC<ILogFormProps> = ({
   form,
   errors,
+  loading,
   submitForm,
   updateForm,
-  loadingPostReq,
   formIsIncomplete,
+  hideSubmitButton,
 }) => {
   return (
     <>
       {/* Loading post request backdrop */}
-      <Backdrop open={loadingPostReq} />
+      <Backdrop open={loading} />
       <Stack spacing={3} sx={{ maxWidth: "650px" }}>
         {/* Date & Time */}
         <DateTimePicker
@@ -126,15 +128,17 @@ const LogForm: React.FC<ILogFormProps> = ({
           handleChange={() => updateForm("vacCool")(!form.vacCool)}
         />
         {/* Submit form */}
-        <Button
-          size="large"
-          variant="contained"
-          onClick={submitForm}
-          sx={{ height: "60px" }}
-          disabled={formIsIncomplete}
-        >
-          Create Log
-        </Button>
+        {!hideSubmitButton && (
+          <Button
+            size="large"
+            variant="contained"
+            sx={{ height: "60px" }}
+            disabled={formIsIncomplete}
+            onClick={submitForm && submitForm}
+          >
+            Create Log
+          </Button>
+        )}
       </Stack>
     </>
   );

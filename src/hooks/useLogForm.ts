@@ -1,10 +1,12 @@
 // Imports
 import useSnacks from "hooks/useSnacks";
-import { createRoast } from "api/axios";
-import { useState, useEffect } from "react";
+import constants from "utils/constants";
+import { IRoast } from "components/Table/types";
 import { getDate, getTime } from "utils/helpers";
 import useFetchLastRoast from "hooks/useFetchLastRoast";
-import { useMutation, useQueryClient } from "react-query";
+import { useCallback, useState, useEffect } from "react";
+import { createRoast, updateRoast, getRoasts } from "api/axios";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 // Types
 export interface IFormState {
@@ -18,6 +20,20 @@ export interface IFormState {
   country: string | null;
   roastedWeight: string;
   dateTime: Date | null;
+}
+export interface IReqBody {
+  roast_number: number;
+  country: string;
+  region: string;
+  process: string;
+  date: string;
+  time: string;
+  green_weight: number;
+  roasted_weight: number;
+  first_crack: number;
+  cool_down: number;
+  vac_to_250: number;
+  id?: number;
 }
 
 const initialFormState = {
@@ -52,31 +68,47 @@ const initialErrorState = {
 /**
  * useLogForm - stores the data from the most recent roast
  */
-const useLogForm = () => {
+const useLogForm = (closeEditWindow?: VoidFunction) => {
   // Local State
   const [checkErrors, setCheckErrors] = useState(false);
-  const [errors, setErrors] = useState<IErrorState>(initialErrorState);
   const [form, setForm] = useState<IFormState>(initialFormState);
   const [formIsIncomplete, setFormIsIncomplete] = useState(true);
+  const [errors, setErrors] = useState<IErrorState>(initialErrorState);
 
   // Hooks
   const { createSnack } = useSnacks();
   const queryClient = useQueryClient();
   const { lastRoast } = useFetchLastRoast();
 
+  // Used to refetch roasts after patch request
+  const { refetch } = useQuery(constants.reactQuery.allRoasts, getRoasts);
+
   // React query POST request to create new roast log
-  const { mutate, isLoading: loadingPostReq } = useMutation(createRoast, {
-    onSuccess: (data) => {
-      clearForm();
-      createSnack("Roast log created", "success");
-    },
-    onError: () => {
-      createSnack("Failed to create roast log", "error");
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries("create");
-    },
-  });
+  const { mutate: mutatePost, isLoading: loadingPostReq } = useMutation(
+    createRoast,
+    {
+      onSuccess: (data) => {
+        clearForm();
+        createSnack("Roast log created", "success");
+      },
+      onError: () => createSnack("Failed to create roast log", "error"),
+      onSettled: () => queryClient.invalidateQueries("create"),
+    }
+  );
+
+  // React query PATCH request to create new roast log
+  const { mutate: mutatePatch, isLoading: loadingPatchReq } = useMutation(
+    updateRoast,
+    {
+      onSuccess: (data) => {
+        refetch();
+        closeEditWindow && closeEditWindow();
+        createSnack("Roast log updated", "success");
+      },
+      onError: () => createSnack("Failed to update roast log", "error"),
+      onSettled: () => queryClient.invalidateQueries("update"),
+    }
+  );
 
   // Updates the form by it's key and passing a value
   const updateForm = (key: keyof typeof form) => (value: any) => {
@@ -85,7 +117,7 @@ const useLogForm = () => {
 
   // Submits valid form
   const submitForm = () => {
-    validateForm(() => mutate(formatLogFormReqBody()));
+    validateForm(() => mutatePost(formatLogFormReqBody()));
   };
 
   // Clears form data, resetting it to intial state
@@ -94,19 +126,23 @@ const useLogForm = () => {
   };
 
   // Format form body for create form request
-  const formatLogFormReqBody = () => ({
-    roast_number: form.roastNum,
-    country: form.country as string,
-    region: form.region,
-    process: form.process as string,
-    date: getDate(form.dateTime),
-    time: getTime(form.dateTime),
-    green_weight: Number(form.greenWeight),
-    roasted_weight: Number(form.roastedWeight),
-    first_crack: parseFloat(form.firstCrack),
-    cool_down: parseFloat(form.coolDown),
-    vac_to_250: form.vacCool ? 1 : 0,
-  });
+  const formatLogFormReqBody = (id?: number) => {
+    const body: IReqBody = {
+      roast_number: form.roastNum,
+      country: form.country as string,
+      region: form.region,
+      process: form.process as string,
+      date: getDate(form.dateTime),
+      time: getTime(form.dateTime),
+      green_weight: Number(form.greenWeight),
+      roasted_weight: Number(form.roastedWeight),
+      first_crack: parseFloat(form.firstCrack),
+      cool_down: parseFloat(form.coolDown),
+      vac_to_250: form.vacCool ? 1 : 0,
+    };
+    if (id) body.id = id;
+    return body;
+  };
 
   // Imports repeatable data from last roast
   const handleImportData = () => {
@@ -144,6 +180,30 @@ const useLogForm = () => {
     }
   };
 
+  // Handles submit for the edit form
+  const handleSubmitEdit = (id: number) => {
+    validateForm(() => mutatePatch(formatLogFormReqBody(id)));
+  };
+
+  // Takes in row values from history table and updates form initial state
+  const updateEditForm = useCallback((values: IRoast | undefined) => {
+    if (values) {
+      const dtStr = `${values.date.slice(0, 10)} ${values.time}`;
+      setForm({
+        region: values.region,
+        process: values.process,
+        country: values.country,
+        dateTime: new Date(dtStr),
+        coolDown: values.cool_down,
+        roastNum: values.roast_number,
+        firstCrack: values.first_crack,
+        vacCool: Boolean(values.vac_to_250),
+        greenWeight: String(values.green_weight),
+        roastedWeight: String(values.roasted_weight),
+      });
+    }
+  }, []);
+
   // Checks for errors after form has been submitted and validation has ran
   useEffect(() => {
     if (checkErrors) {
@@ -176,11 +236,12 @@ const useLogForm = () => {
     clearForm,
     submitForm,
     updateForm,
-    validateForm,
+    updateEditForm,
     loadingPostReq,
-    handleImportData,
+    loadingPatchReq,
+    handleSubmitEdit,
     formIsIncomplete,
-    formatLogFormReqBody,
+    handleImportData,
   };
 };
 
