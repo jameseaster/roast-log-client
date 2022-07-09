@@ -15,7 +15,6 @@ export interface IRoast {
   user_email: string;
   first_crack: string;
   green_weight: number;
-  roast_number: number;
   roasted_weight: number;
 }
 
@@ -25,6 +24,7 @@ export interface IRoast {
 const useFetchLastRoast = () => {
   // Local State
   const [lastRoast, setLastRoast] = useState<IRoast>();
+  const [roastNumber, setRoastNumber] = useState<number>(0);
 
   // Fetch roasts
   const { isError, data } = useQuery("roasts", getRoasts);
@@ -32,10 +32,13 @@ const useFetchLastRoast = () => {
   // Store last roast in state
   useEffect(() => {
     if (isError) setLastRoast(undefined);
-    else if (data?.length) setLastRoast(data[0]);
+    else if (data?.length) {
+      setLastRoast(data[0]);
+      setRoastNumber(data.length + 1);
+    }
   }, [data, isError]);
 
-  return { lastRoast };
+  return { roastNumber, lastRoast };
 };
 
 export default useFetchLastRoast;

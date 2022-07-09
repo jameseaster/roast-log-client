@@ -11,7 +11,6 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 // Types
 export interface IFormState {
   region: string;
-  roastNum: number;
   coolDown: string;
   vacCool: boolean;
   firstCrack: string;
@@ -22,7 +21,6 @@ export interface IFormState {
   dateTime: Date | null;
 }
 export interface IReqBody {
-  roast_number: number;
   country: string;
   region: string;
   process: string;
@@ -38,7 +36,6 @@ export interface IReqBody {
 
 const initialFormState = {
   region: "",
-  roastNum: 0,
   coolDown: "",
   vacCool: true,
   process: null,
@@ -78,7 +75,7 @@ const useLogForm = (closeEditWindow?: VoidFunction) => {
   // Hooks
   const { createSnack } = useSnacks();
   const queryClient = useQueryClient();
-  const { lastRoast } = useFetchLastRoast();
+  const { roastNumber, lastRoast } = useFetchLastRoast();
 
   // Used to refetch roasts after patch request
   const { refetch } = useQuery(constants.reactQuery.allRoasts, getRoasts);
@@ -128,17 +125,16 @@ const useLogForm = (closeEditWindow?: VoidFunction) => {
   // Format form body for create form request
   const formatLogFormReqBody = (id?: number) => {
     const body: IReqBody = {
-      roast_number: form.roastNum,
-      country: form.country as string,
       region: form.region,
-      process: form.process as string,
       date: getDate(form.dateTime),
       time: getTime(form.dateTime),
-      green_weight: Number(form.greenWeight),
-      roasted_weight: Number(form.roastedWeight),
-      first_crack: parseFloat(form.firstCrack),
-      cool_down: parseFloat(form.coolDown),
+      country: form.country as string,
+      process: form.process as string,
       vac_to_250: form.vacCool ? 1 : 0,
+      cool_down: parseFloat(form.coolDown),
+      green_weight: Number(form.greenWeight),
+      first_crack: parseFloat(form.firstCrack),
+      roasted_weight: Number(form.roastedWeight),
     };
     if (id) body.id = id;
     return body;
@@ -195,7 +191,6 @@ const useLogForm = (closeEditWindow?: VoidFunction) => {
         country: values.country,
         dateTime: new Date(dtStr),
         coolDown: values.cool_down,
-        roastNum: values.roast_number,
         firstCrack: values.first_crack,
         vacCool: Boolean(values.vac_to_250),
         greenWeight: String(values.green_weight),
@@ -224,18 +219,13 @@ const useLogForm = (closeEditWindow?: VoidFunction) => {
     }
   }, [formIsIncomplete, checkErrors, form]);
 
-  // Assigns next roast number
-  useEffect(() => {
-    if (form?.roastNum === 0 && lastRoast)
-      setForm((f) => ({ ...f, roastNum: lastRoast.roast_number + 1 }));
-  }, [lastRoast, form.roastNum]);
-
   return {
     form,
     errors,
     clearForm,
     submitForm,
     updateForm,
+    roastNumber,
     updateEditForm,
     loadingPostReq,
     loadingPatchReq,

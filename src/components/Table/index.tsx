@@ -1,9 +1,8 @@
 // Imports
 import { style } from "./style";
 import { columns } from "./config";
-import { ITableProps } from "./types";
 import React, { useState } from "react";
-import { IRoast } from "hooks/useFetchLastRoast";
+import { ITableProps, IRoast } from "./types";
 import TableEditDialog from "components/TableEditDialog";
 //MUI
 import Box from "@mui/system/Box";
@@ -39,6 +38,12 @@ const Table: React.FC<ITableProps> = ({ rows }) => {
     setOpenEditDialog(false);
   };
 
+  // Adds an index value for each roast
+  const addIndexValues = (row: IRoast, i: number, c: IRoast[]) => ({
+    ...row,
+    index: c.length - i,
+  });
+
   return (
     <>
       <TableEditDialog
@@ -57,9 +62,9 @@ const Table: React.FC<ITableProps> = ({ rows }) => {
         </Button>
       </Box>
       <DataGrid
-        rows={rows}
         columns={columns}
         pageSize={pageSize}
+        rows={rows.map(addIndexValues)}
         selectionModel={selectionModel}
         rowsPerPageOptions={[10, 20, 50]}
         onSelectionModelChange={(id) => setSelectionModel(id)}

@@ -1,7 +1,5 @@
-import { IFormState } from "hooks/useLogForm";
-
 export interface ILogFormHeaderProps {
-  form: IFormState;
+  roastNumber: number;
   clearForm: VoidFunction;
   handleImportData: VoidFunction;
 }

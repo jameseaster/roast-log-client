@@ -12,16 +12,14 @@ import Typography from "@mui/material/Typography";
  * LogFormHeader
  */
 const LogFormHeader: React.FC<ILogFormHeaderProps> = ({
-  form,
   clearForm,
+  roastNumber,
   handleImportData,
 }) => {
   return (
     <Container style={style.header}>
       {/* Roast Number */}
-      <Typography variant="h4">
-        Roast #{form?.roastNum && form.roastNum}
-      </Typography>
+      <Typography variant="h4">Roast #{roastNumber}</Typography>
       <Box>
         <Button
           variant="outlined"

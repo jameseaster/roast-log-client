@@ -14,6 +14,5 @@ export interface IRoast {
   user_email: string;
   first_crack: string;
   green_weight: number;
-  roast_number: number;
   roasted_weight: number;
 }

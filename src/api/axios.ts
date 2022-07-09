@@ -10,7 +10,6 @@ interface IRoastRequestData {
   cool_down: number;
   vac_to_250: number;
   first_crack: number;
-  roast_number: number;
   green_weight: number;
   roasted_weight: number;
 }

@@ -5,7 +5,7 @@ import { formatDateString, formatTime, formatRoastTimes } from "utils/helpers";
 // Table column configurations
 export const columns: GridColDef[] = [
   {
-    field: "roast_number",
+    field: "index",
     headerName: "#",
     width: 60,
   },

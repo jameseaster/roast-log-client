@@ -35,7 +35,6 @@ const TableEditDialog: React.FC<ITableEditDialogProps> = ({
   // Updates the edit form with the selectedRow's data
   useEffect(() => {
     if (selectedRow) updateEditForm(selectedRow);
-    console.log(selectedRow);
   }, [selectedRow, updateEditForm]);
 
   return (

@@ -21,6 +21,7 @@ const NewLog: React.FC<INewLogProps> = () => {
     clearForm,
     submitForm,
     updateForm,
+    roastNumber,
     loadingPostReq,
     formIsIncomplete,
     handleImportData,
@@ -31,8 +32,8 @@ const NewLog: React.FC<INewLogProps> = () => {
       <Card sx={style.card}>
         <CardContent>
           <LogFormHeader
-            form={form}
             clearForm={clearForm}
+            roastNumber={roastNumber}
             handleImportData={handleImportData}
           />
           <LogForm
