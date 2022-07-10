@@ -23,15 +23,16 @@ const LogFormHeader: React.FC<ILogFormHeaderProps> = ({
       <Box>
         <Button
           variant="outlined"
-          sx={{ textTransform: "none", mr: 1 }}
           onClick={handleImportData}
+          disabled={roastNumber === 1}
+          sx={{ textTransform: "none", mr: 1 }}
         >
           Import Previous
         </Button>
         <Button
           variant="outlined"
-          sx={{ textTransform: "none" }}
           onClick={clearForm}
+          sx={{ textTransform: "none" }}
         >
           Clear
         </Button>

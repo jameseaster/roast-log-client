@@ -10,12 +10,12 @@ interface IApi {
   authenticated: string;
 }
 const api: IApi = {
-  roasts: "/roasts",
-  signin: "/auth/signin",
-  signout: "/auth/signout",
-  register: "/auth/register",
-  authenticated: "/auth/authenticated",
-  baseUrl: "http://localhost:8080/API",
+  roasts: "roasts/",
+  signin: "auth/signin/",
+  signout: "auth/signout/",
+  register: "auth/register/",
+  authenticated: "auth/authenticated/",
+  baseUrl: "http://localhost:8080/API/",
 };
 
 /**

@@ -5,8 +5,8 @@ import { IRoast } from "components/Table/types";
 import { getDate, getTime } from "utils/helpers";
 import useFetchLastRoast from "hooks/useFetchLastRoast";
 import { useCallback, useState, useEffect } from "react";
-import { createRoast, updateRoast, getRoasts } from "api/axios";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import { createRoast, updateRoast, getRoasts, deleteRoast } from "api/axios";
 
 // Types
 export interface IFormState {
@@ -65,7 +65,7 @@ const initialErrorState = {
 /**
  * useLogForm - stores the data from the most recent roast
  */
-const useLogForm = (closeEditWindow?: VoidFunction) => {
+const useLogForm = (closeDialogsClearForm?: VoidFunction) => {
   // Local State
   const [checkErrors, setCheckErrors] = useState(false);
   const [form, setForm] = useState<IFormState>(initialFormState);
@@ -75,7 +75,7 @@ const useLogForm = (closeEditWindow?: VoidFunction) => {
   // Hooks
   const { createSnack } = useSnacks();
   const queryClient = useQueryClient();
-  const { roastNumber, lastRoast } = useFetchLastRoast();
+  const { roastNumber, lastRoast, updateLastRoast } = useFetchLastRoast();
 
   // Used to refetch roasts after patch request
   const { refetch } = useQuery(constants.reactQuery.allRoasts, getRoasts);
@@ -85,6 +85,7 @@ const useLogForm = (closeEditWindow?: VoidFunction) => {
     createRoast,
     {
       onSuccess: (data) => {
+        updateLastRoast();
         clearForm();
         createSnack("Roast log created", "success");
       },
@@ -99,13 +100,34 @@ const useLogForm = (closeEditWindow?: VoidFunction) => {
     {
       onSuccess: (data) => {
         refetch();
-        closeEditWindow && closeEditWindow();
+        updateLastRoast();
         createSnack("Roast log updated", "success");
+        closeDialogsClearForm && closeDialogsClearForm();
       },
       onError: () => createSnack("Failed to update roast log", "error"),
       onSettled: () => queryClient.invalidateQueries("update"),
     }
   );
+
+  // React query DELETE request to create new roast log
+  const { mutate: mutateDelete, isLoading: loadingDeleteReq } = useMutation(
+    deleteRoast,
+    {
+      onSuccess: (data) => {
+        refetch();
+        updateLastRoast();
+        createSnack("Roast log deleted", "success");
+        closeDialogsClearForm && closeDialogsClearForm();
+      },
+      onError: () => createSnack("Failed to delete roast log", "error"),
+      onSettled: () => queryClient.invalidateQueries("delete"),
+    }
+  );
+
+  // Deletes a roast log by its id
+  const sendDeleteRoastRequest = (id: number) => {
+    if (id) mutateDelete(String(id));
+  };
 
   // Updates the form by it's key and passing a value
   const updateForm = (key: keyof typeof form) => (value: any) => {
@@ -229,9 +251,11 @@ const useLogForm = (closeEditWindow?: VoidFunction) => {
     updateEditForm,
     loadingPostReq,
     loadingPatchReq,
+    loadingDeleteReq,
     handleSubmitEdit,
     formIsIncomplete,
     handleImportData,
+    sendDeleteRoastRequest,
   };
 };
 

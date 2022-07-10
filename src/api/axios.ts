@@ -38,4 +38,10 @@ export const updateRoast = async (roastData: IRoastRequestData) => {
   return response;
 };
 
+// Sends delete request to create new roast
+export const deleteRoast = async (id: string) => {
+  const response = await API.delete(constants.api.roasts + id);
+  return response;
+};
+
 export default API;

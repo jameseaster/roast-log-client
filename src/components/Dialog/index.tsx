@@ -17,16 +17,30 @@ const Dialog: React.FC<IDialogProps> = ({
   children,
   cancelText,
   confirmText,
+  cancelColor,
+  confirmColor,
   handleCancel,
+  cancelVariant,
   handleConfirm,
+  confirmVariant,
 }) => {
   return (
     <DialogMUI open={open} onClose={handleCancel}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
-      <DialogActions sx={{ mt: 4 }}>
-        <Button onClick={handleCancel}>{cancelText}</Button>
-        <Button onClick={handleConfirm} variant="contained">
+      <DialogActions sx={{ mt: 2 }}>
+        <Button
+          onClick={handleCancel}
+          color={cancelColor || "primary"}
+          variant={cancelVariant || "outlined"}
+        >
+          {cancelText}
+        </Button>
+        <Button
+          onClick={handleConfirm}
+          color={confirmColor || "primary"}
+          variant={confirmVariant || "contained"}
+        >
           {confirmText}
         </Button>
       </DialogActions>

@@ -24,10 +24,14 @@ export interface IRoast {
 const useFetchLastRoast = () => {
   // Local State
   const [lastRoast, setLastRoast] = useState<IRoast>();
-  const [roastNumber, setRoastNumber] = useState<number>(0);
+  const [roastNumber, setRoastNumber] = useState<number>(1);
 
   // Fetch roasts
-  const { isError, data } = useQuery("roasts", getRoasts);
+  const {
+    data,
+    isError,
+    refetch: updateLastRoast,
+  } = useQuery("roasts", getRoasts);
 
   // Store last roast in state
   useEffect(() => {
@@ -38,7 +42,7 @@ const useFetchLastRoast = () => {
     }
   }, [data, isError]);
 
-  return { roastNumber, lastRoast };
+  return { roastNumber, lastRoast, updateLastRoast };
 };
 
 export default useFetchLastRoast;

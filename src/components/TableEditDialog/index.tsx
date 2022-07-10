@@ -1,15 +1,15 @@
 // Imports
-import React, { useEffect } from "react";
 import { style } from "./style";
 import Dialog from "components/Dialog";
+import React, { useEffect } from "react";
 import LogForm from "components/LogForm";
 import useLogForm from "hooks/useLogForm";
 import { ITableEditDialogProps } from "./types";
-//MUI
+// MUI
 import Box from "@mui/system/Box";
 
 /**
- * TableEditDialog
+ * TableEditDialog - provides a dialog for the user to edit a roast log
  */
 const TableEditDialog: React.FC<ITableEditDialogProps> = ({
   open,
@@ -40,8 +40,9 @@ const TableEditDialog: React.FC<ITableEditDialogProps> = ({
   return (
     <Dialog
       open={open}
-      cancelText={"Close"}
+      cancelText={"Cancel"}
       confirmText={"Update"}
+      cancelVariant={"text"}
       title={"Edit Roast Log"}
       handleCancel={handleClose}
       handleConfirm={confirmEdits}
