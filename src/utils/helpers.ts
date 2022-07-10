@@ -25,7 +25,7 @@ export const formatRoastTimes = (time: number) => {
  */
 export const formatDateString = (date: string) => {
   const [year, month, day] = date.slice(0, 10).split("-");
-  return `${constants.general.months[+month]} ${+day}, ${year}`;
+  return `${constants.general.months[+month - 1]} ${+day}, ${year}`;
 };
 
 /**
