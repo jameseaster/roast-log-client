@@ -1,5 +1,6 @@
 // Imports
 import React from "react";
+import { ILogFormProps } from "./types";
 import constants from "utils/constants";
 import Backdrop from "components/Backdrop";
 import NumberInput from "components/NumberInput";
@@ -7,23 +8,10 @@ import { countryNames } from "utils/countryNames";
 import AutoComplete from "components/AutoComplete";
 import ToggleButton from "components/ToggleButton";
 import DateTimePicker from "components/DateTimePicker";
-// Types
-import { IFormState, IErrorState } from "hooks/useLogForm";
 // MUI
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-
-// Types
-export interface ILogFormProps {
-  form: IFormState;
-  loading: boolean;
-  errors: IErrorState;
-  submitForm?: VoidFunction;
-  formIsIncomplete: boolean;
-  hideSubmitButton?: boolean;
-  updateForm: (key: keyof IFormState) => (value: any) => void;
-}
 
 /**
  * LogForm

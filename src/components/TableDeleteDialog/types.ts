@@ -1,5 +1,5 @@
 // Types
-import { IRoast } from "components/Table/types";
+import { IRoast } from "types/app";
 
 export interface ITableDeleteDialogProps {
   open: boolean;

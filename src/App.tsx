@@ -1,11 +1,11 @@
 // Imports
 import Signin from "pages/Signin";
-import Tabs from "components/Tabs";
 import NewLog from "pages/NewLog";
+import Tabs from "components/Tabs";
 import History from "pages/History";
-import Dashboard from "pages/Dashboard";
 import Register from "pages/Register";
 import AppBar from "components/AppBar";
+import Dashboard from "pages/Dashboard";
 import { useAuthContext } from "state/authContext";
 import ProtectedRoute from "components/ProtectedRoute";
 import { BrowserRouter, Route, Routes } from "react-router-dom";

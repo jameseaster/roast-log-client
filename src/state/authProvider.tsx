@@ -4,7 +4,12 @@ import constants from "utils/constants";
 import useSnacks from "hooks/useSnacks";
 import { AuthContext } from "./authContext";
 import { useState, useEffect } from "react";
-import { ISignin, ISignout, IRegister, IAuthProviderProps } from "./authTypes";
+import {
+  ISignin,
+  ISignout,
+  IRegister,
+  IAuthProviderProps,
+} from "../types/auth";
 
 // TODO: CONVERT TO REACT QUERY //
 

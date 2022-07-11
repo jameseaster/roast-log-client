@@ -1,22 +1,8 @@
 // Imports
-import { useState, useEffect } from "react";
+import { IRoast } from "types/app";
 import { getRoasts } from "api/axios";
 import { useQuery } from "react-query";
-
-export interface IRoast {
-  id: number;
-  date: string;
-  time: string;
-  region: string;
-  process: string;
-  country: string;
-  cool_down: string;
-  vac_to_250: number;
-  user_email: string;
-  first_crack: string;
-  green_weight: number;
-  roasted_weight: number;
-}
+import { useState, useEffect } from "react";
 
 /**
  * useFetchLastRoast - stores the data from the most recent roast

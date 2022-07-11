@@ -1,38 +1,12 @@
 // Imports
 import useSnacks from "hooks/useSnacks";
 import constants from "utils/constants";
-import { IRoast } from "components/Table/types";
 import { getDate, getTime } from "utils/helpers";
 import useFetchLastRoast from "hooks/useFetchLastRoast";
 import { useCallback, useState, useEffect } from "react";
+import { IRoast, IFormState, IErrorState, IReqBody } from "types/app";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { createRoast, updateRoast, getRoasts, deleteRoast } from "api/axios";
-
-// Types
-export interface IFormState {
-  region: string;
-  coolDown: string;
-  vacCool: boolean;
-  firstCrack: string;
-  greenWeight: string;
-  process: string | null;
-  country: string | null;
-  roastedWeight: string;
-  dateTime: Date | null;
-}
-export interface IReqBody {
-  country: string;
-  region: string;
-  process: string;
-  date: string;
-  time: string;
-  green_weight: number;
-  roasted_weight: number;
-  first_crack: number;
-  cool_down: number;
-  vac_to_250: number;
-  id?: number;
-}
 
 const initialFormState = {
   region: "",
@@ -46,20 +20,16 @@ const initialFormState = {
   dateTime: new Date(),
 };
 
-export interface IErrorState {
-  [key: string]: boolean;
-}
-
 const initialErrorState = {
   date: false,
   time: false,
-  country: false,
-  process: false,
   region: false,
+  process: false,
+  country: false,
+  coolDown: false,
+  firstCrack: false,
   greenWeight: false,
   roastedWeight: false,
-  firstCrack: false,
-  coolDown: false,
 };
 
 /**

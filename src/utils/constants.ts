@@ -1,15 +1,14 @@
-/**
- * API
- */
-interface IApi {
-  roasts: string;
-  signin: string;
-  baseUrl: string;
-  signout: string;
-  register: string;
-  authenticated: string;
-}
-const api: IApi = {
+// Imports
+import {
+  IApiConstants,
+  ILogConstants,
+  IAppbarConstants,
+  IGeneralConstants,
+  IReactQueryConstants,
+} from "types/constants";
+
+// API
+const api: IApiConstants = {
   roasts: "roasts/",
   signin: "auth/signin/",
   signout: "auth/signout/",
@@ -18,46 +17,23 @@ const api: IApi = {
   baseUrl: "http://localhost:8080/API/",
 };
 
-/**
- * App Bar
- */
-interface IAppbar {
-  title: string;
-}
-const appbar: IAppbar = {
+// App Bar
+const appbar: IAppbarConstants = {
   title: "ROAST LOG",
 };
 
-/**
- * Log Form
- */
-interface ILog {
-  options: string[];
-}
-
-const log: ILog = {
+// Log Form
+const log: ILogConstants = {
   options: ["Dry", "Wet", "Honey"],
 };
 
-/**
- * React Query
- */
-interface IReactQuery {
-  allRoasts: string;
-}
-
-const reactQuery: IReactQuery = {
+// React Query
+const reactQuery: IReactQueryConstants = {
   allRoasts: "allRoasts",
 };
 
-/**
- * General
- */
-interface IGeneral {
-  months: string[];
-}
-
-const general: IGeneral = {
+// General
+const general: IGeneralConstants = {
   months: [
     "Jan",
     "Feb",

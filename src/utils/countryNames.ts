@@ -1,4 +1,4 @@
-export const countryNames = [
+export const countryNames: string[] = [
   "Algeria",
   "Angola",
   "Benin",

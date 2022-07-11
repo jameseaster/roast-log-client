@@ -1,8 +1,9 @@
 // Imports
 import { style } from "./style";
 import { columns } from "./config";
+import { IRoast } from "types/app";
+import { ITableProps } from "./types";
 import React, { useState } from "react";
-import { ITableProps, IRoast } from "./types";
 import TableEditDialog from "components/TableEditDialog";
 import TableDeleteDialog from "components/TableDeleteDialog";
 //MUI

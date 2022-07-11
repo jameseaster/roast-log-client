@@ -1,12 +1,7 @@
 // Imports
+import { TabPanelProps } from "./types";
+// MUI
 import Box from "@mui/material/Box";
-
-// Types
-interface TabPanelProps {
-  index: number;
-  value: number;
-  children?: React.ReactNode;
-}
 
 /**
  * TabPanel - used in Tabs component

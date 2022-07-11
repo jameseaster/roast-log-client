@@ -1,3 +1,5 @@
+import { ButtonThemeVariantMUI, ButtonThemeColorMUI } from "types/app";
+
 export interface IDialogProps {
   open: boolean;
   title: string;
@@ -11,18 +13,3 @@ export interface IDialogProps {
   cancelVariant?: ButtonThemeVariantMUI;
   confirmVariant?: ButtonThemeVariantMUI;
 }
-
-export type ButtonThemeVariantMUI =
-  | "text"
-  | "outlined"
-  | "contained"
-  | undefined;
-
-export type ButtonThemeColorMUI =
-  | "inherit"
-  | "primary"
-  | "secondary"
-  | "success"
-  | "error"
-  | "info"
-  | "warning";

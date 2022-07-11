@@ -1,4 +1,4 @@
-import { IRoast } from "hooks/useFetchLastRoast";
+import { IRoast } from "types/app";
 
 export interface ITableEditDialogProps {
   open: boolean;

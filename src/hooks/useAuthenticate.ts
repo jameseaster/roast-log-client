@@ -1,6 +1,6 @@
 // Imports
 import { useState } from "react";
-import { ISignout } from "state/authTypes";
+import { ISignout } from "types/auth";
 import { useAuthContext } from "state/authContext";
 import { IHandleSubmit } from "components/AuthForm/types";
 
