@@ -3,8 +3,11 @@ import React from "react";
 import { style } from "./style";
 import Dialog from "components/Dialog";
 import useLogForm from "hooks/useLogForm";
+import { useSelector } from "react-redux";
 import Backdrop from "components/Backdrop";
 import { ITableDeleteDialogProps } from "./types";
+import { getAppState } from "state/redux/slices/app";
+import useDeleteRoastStatus from "hooks/useDeleteRoastStatus";
 //MUI
 import Box from "@mui/system/Box";
 import Divider from "@mui/material/Divider";
@@ -18,8 +21,14 @@ const TableDeleteDialog: React.FC<ITableDeleteDialogProps> = ({
   open,
   handleClose,
 }) => {
-  // Hooks
-  const { loadingDeleteReq, sendDeleteRoastRequest } = useLogForm(handleClose);
+  // Global State
+  const { deleteRoastStatus } = useSelector(getAppState);
+
+  // Log form function
+  const { sendDeleteRoastRequest } = useLogForm();
+
+  // Creats snack when deleteRoastStatus changes
+  useDeleteRoastStatus(handleClose);
 
   // Called when delete action is confirmed
   const handleDeleteRoast = () => {
@@ -28,7 +37,6 @@ const TableDeleteDialog: React.FC<ITableDeleteDialogProps> = ({
 
   return (
     <>
-      <Backdrop open={loadingDeleteReq} />
       <Dialog
         open={open}
         cancelText={"cancel"}
@@ -41,15 +49,18 @@ const TableDeleteDialog: React.FC<ITableDeleteDialogProps> = ({
         confirmText={"Confirm DELETE"}
         handleConfirm={handleDeleteRoast}
       >
-        <Box sx={style.dialogBox}>
-          <Typography>
-            Are you sure you want to permanently delete this roast log?
-          </Typography>
-          <Divider sx={style.divider} />
-          <Typography>
-            <i>This can not be undone.</i>
-          </Typography>
-        </Box>
+        <>
+          <Backdrop open={deleteRoastStatus !== null} />
+          <Box sx={style.dialogBox}>
+            <Typography>
+              Are you sure you want to permanently delete this roast log?
+            </Typography>
+            <Divider sx={style.divider} />
+            <Typography>
+              <i>This can not be undone.</i>
+            </Typography>
+          </Box>
+        </>
       </Dialog>
     </>
   );

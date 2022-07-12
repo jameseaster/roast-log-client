@@ -2,10 +2,9 @@
 import React from "react";
 import { style } from "./style";
 import Table from "components/Table";
-import { getRoasts } from "api/axios";
-import { useQuery } from "react-query";
 import { IHistoryProps } from "./types";
-import constants from "utils/constants";
+import { useSelector } from "react-redux";
+import { roastData } from "state/redux/slices/app";
 // MUI Imports
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
@@ -17,15 +16,15 @@ import CardContent from "@mui/material/CardContent";
  * History Page
  */
 const History: React.FC<IHistoryProps> = () => {
-  // Fetch roast data
-  const query = useQuery(constants.reactQuery.allRoasts, getRoasts);
+  // Global State
+  const { roasts, loadingRoasts, loadingRoastsError } = useSelector(roastData);
 
   return (
     <Container
-      sx={query.isLoading || query.isError ? style.container : style.table}
+      sx={loadingRoasts || loadingRoastsError ? style.container : style.table}
     >
       {/* Loading state */}
-      {query.isLoading && (
+      {loadingRoasts && (
         <Card sx={style.card}>
           <CardContent>
             <Stack spacing={2}>
@@ -36,21 +35,21 @@ const History: React.FC<IHistoryProps> = () => {
       )}
 
       {/* Error state */}
-      {query.isError && (
+      {loadingRoastsError && (
         <Card sx={style.card}>
           <CardContent>
             <Stack spacing={2}>
-              <Typography variant="h4">Error...</Typography>
+              <Typography variant="h4">Error Loading Data</Typography>
             </Stack>
           </CardContent>
         </Card>
       )}
 
       {/* Data table */}
-      {!query.isLoading && !query.isError && query.data && (
+      {!loadingRoasts && !loadingRoastsError && roasts && (
         <Card sx={style.tableCard}>
           <CardContent sx={style.tableCardContent}>
-            <Table rows={query.data || []} />
+            <Table rows={roasts || []} />
           </CardContent>
         </Card>
       )}

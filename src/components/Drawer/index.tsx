@@ -2,8 +2,8 @@
 import React from "react";
 import { style } from "./style";
 import { IDrawer } from "./types";
-import { useAuthContext } from "state/authContext";
 import useAuthenticate from "hooks/useAuthenticate";
+import { useAuthContext } from "state/auth/context";
 // MUI
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
