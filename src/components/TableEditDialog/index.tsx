@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import LogForm from "components/LogForm";
 import useLogForm from "hooks/useLogForm";
 import { ITableEditDialogProps } from "./types";
-import { getAppState } from "state/redux/slices/app";
+import { getRoastsState } from "providers/redux/slices/roasts";
 import usePatchRoastStatus from "hooks/usePatchRoastStatus";
 // MUI
 import Box from "@mui/system/Box";
@@ -20,7 +20,7 @@ const TableEditDialog: React.FC<ITableEditDialogProps> = ({
   handleClose,
 }) => {
   // Global State
-  const { updateRoastStatus } = useSelector(getAppState);
+  const { updateRoastStatus } = useSelector(getRoastsState);
 
   // Patch request status updates
   usePatchRoastStatus(handleClose);

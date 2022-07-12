@@ -8,42 +8,42 @@ const api = (store: any) => (next: any) => async (action: any) => {
 
   const { url, method, data, onSuccess, onError, onStart } = action.payload;
 
-  if (onStart) store.dispatch({ type: onStart });
+  // Pass along method for reducer to update request statuses
+  if (onStart) store.dispatch({ type: onStart, payload: { method } });
 
-  // Add next here to see both actions in devTools
-  next(action); // SHOWS THE API CALL BEGAN
+  // General log for the start of an api request
+  // next(action); // SHOWS THE API CALL BEGAN
 
   try {
-    // Bearer Token for local requests
-    const headers = { "Content-Type": "application/json" };
-
-    // Delays request for dev testing //
+    // DEV TESTING: Delays request to mock longer loading
     await new Promise((resolve) => setTimeout(resolve, 1000)); // TODO: COMMENT OUT
 
     // HTTP request
     const response = await axios.request({
       baseURL: constants.api.baseUrl,
       url,
-      headers,
-      method,
       data,
+      method,
       withCredentials: true,
+      headers: { "Content-Type": "application/json" },
     });
 
     // General success dispatch
-    store.dispatch(actions.apiCallSuccess(response.data)); // SHOWS THE API CALL SUCCEEDED
+    // store.dispatch(actions.apiCallSuccess(response.data)); // SHOWS THE API CALL SUCCEEDED
 
     // Specific success dispatch
-    if (onSuccess) {
-      store.dispatch({ type: onSuccess, payload: response.data });
-    }
+    if (onSuccess) store.dispatch({ type: onSuccess, payload: response.data });
   } catch (error: any) {
     // General err dispatch
-    store.dispatch(actions.apiCallFailed(error)); // SHOWS THE API CALL FAILED
+    // store.dispatch(actions.apiCallFailed(error)); // SHOWS THE API CALL FAILED
 
     // Specific error dispatch
     if (onError) {
-      store.dispatch({ type: onError, error: error.message });
+      store.dispatch({
+        type: onError,
+        // Include method for reducer to update request statuses
+        payload: { method, error: error.message },
+      });
     }
   }
 };

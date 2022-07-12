@@ -6,7 +6,7 @@ import useLogForm from "hooks/useLogForm";
 import { useSelector } from "react-redux";
 import Backdrop from "components/Backdrop";
 import { ITableDeleteDialogProps } from "./types";
-import { getAppState } from "state/redux/slices/app";
+import { getRoastsState } from "providers/redux/slices/roasts";
 import useDeleteRoastStatus from "hooks/useDeleteRoastStatus";
 //MUI
 import Box from "@mui/system/Box";
@@ -22,12 +22,12 @@ const TableDeleteDialog: React.FC<ITableDeleteDialogProps> = ({
   handleClose,
 }) => {
   // Global State
-  const { deleteRoastStatus } = useSelector(getAppState);
+  const { deleteRoastStatus } = useSelector(getRoastsState);
 
   // Log form function
   const { sendDeleteRoastRequest } = useLogForm();
 
-  // Creats snack when deleteRoastStatus changes
+  // Creates snack when deleteRoastStatus changes
   useDeleteRoastStatus(handleClose);
 
   // Called when delete action is confirmed

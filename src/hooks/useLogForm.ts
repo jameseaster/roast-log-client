@@ -2,15 +2,15 @@
 import useSnacks from "hooks/useSnacks";
 import { useSelector } from "react-redux";
 import { getDate, getTime } from "utils/helpers";
-import { useAppDispatch } from "state/redux/store";
+import { useAppDispatch } from "providers/redux/store";
 import { useCallback, useState, useEffect } from "react";
+import { IRoast, IFormState, IErrorState, IReqBody } from "types/app";
 import {
   deleteRoast,
   updateRoast,
   createRoast,
-  getLastRoast,
-} from "state/redux/slices/app";
-import { IRoast, IFormState, IErrorState, IReqBody } from "types/app";
+  getAllRoasts,
+} from "providers/redux/slices/roasts";
 
 const initialFormState = {
   region: "",
@@ -42,7 +42,8 @@ const initialErrorState = {
 const useLogForm = (closeDialogsClearForm?: VoidFunction) => {
   // Global State
   const dispatch = useAppDispatch();
-  const { lastRoast } = useSelector(getLastRoast);
+  const { allRoasts } = useSelector(getAllRoasts);
+  const lastRoast = allRoasts[0];
 
   // Local State
   const [checkErrors, setCheckErrors] = useState(false);

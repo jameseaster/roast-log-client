@@ -3,7 +3,7 @@ import React from "react";
 import { style } from "./style";
 import { useSelector } from "react-redux";
 import { ILogFormHeaderProps } from "./types";
-import { getRoastNumber } from "state/redux/slices/app";
+import { getRoastsState } from "providers/redux/slices/roasts";
 // MUI Imports
 import Box from "@mui/system/Box";
 import Button from "@mui/material/Button";
@@ -17,7 +17,7 @@ const LogFormHeader: React.FC<ILogFormHeaderProps> = ({
   clearForm,
   handleImportData,
 }) => {
-  const { nextRoastNumber } = useSelector(getRoastNumber);
+  const { nextRoastNumber } = useSelector(getRoastsState);
 
   return (
     <Container style={style.header}>

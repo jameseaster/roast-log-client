@@ -3,7 +3,7 @@ import React from "react";
 import { style } from "./style";
 import { IDrawer } from "./types";
 import useAuthenticate from "hooks/useAuthenticate";
-import { useAuthContext } from "state/auth/context";
+import { useAuthContext } from "providers/auth/context";
 // MUI
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";

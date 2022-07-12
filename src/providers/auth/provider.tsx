@@ -1,17 +1,17 @@
 // Imports
-import API from "api/axios";
+import axios from "axios";
 import constants from "utils/constants";
 import useSnacks from "hooks/useSnacks";
 import { AuthContext } from "./context";
 import { useState, useEffect } from "react";
-import {
-  ISignin,
-  ISignout,
-  IRegister,
-  IAuthProviderProps,
-} from "../../types/auth";
+import { ISignin, ISignout, IRegister, IAuthProviderProps } from "types/auth";
 
 // TODO: CONVERT TO UTILIZE REDUX API MIDDLEWARE //
+const API = axios.create({
+  withCredentials: true,
+  baseURL: constants.api.baseUrl,
+  headers: { "Content-Type": "application/json" },
+});
 
 /**
  * Auth Provider Component

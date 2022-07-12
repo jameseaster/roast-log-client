@@ -1,13 +1,13 @@
 // Imports
-import { useCallback, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "state/redux/store";
-import {
-  getUpdateRoastStatus,
-  clearUpdateRoastStatus,
-} from "state/redux/slices/app";
 import useSnacks from "./useSnacks";
 import { VariantType } from "notistack";
+import { useSelector } from "react-redux";
+import { useCallback, useEffect } from "react";
+import { useAppDispatch } from "providers/redux/store";
+import {
+  getRoastsState,
+  clearRoastStatus,
+} from "providers/redux/slices/roasts";
 
 /**
  * usePatchRoastStatus - creates a snack for the status update when updating a roast log
@@ -15,7 +15,8 @@ import { VariantType } from "notistack";
 const usePatchRoastStatus = (onSuccess: VoidFunction) => {
   // Global State
   const dispatch = useAppDispatch();
-  const { updateRoastStatus } = useSelector(getUpdateRoastStatus);
+  const { updateRoastStatus } = useSelector(getRoastsState);
+
   // Hooks
   const { createSnack } = useSnacks();
 
@@ -29,11 +30,19 @@ const usePatchRoastStatus = (onSuccess: VoidFunction) => {
   useEffect(() => {
     if (updateRoastStatus === "success") {
       stableSnack("Roast log updated", "success");
-      dispatch(clearUpdateRoastStatus());
+      dispatch({
+        type: clearRoastStatus.type,
+        payload: "PATCH",
+      });
       onSuccess();
     } else if (updateRoastStatus === "error") {
       stableSnack("Failed to update roast log", "error");
-      dispatch(clearUpdateRoastStatus());
+      dispatch(
+        dispatch({
+          type: clearRoastStatus.type,
+          payload: "PATCH",
+        })
+      );
     }
   }, [updateRoastStatus, stableSnack, dispatch, onSuccess]);
 };

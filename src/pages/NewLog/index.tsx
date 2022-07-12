@@ -6,8 +6,8 @@ import LogForm from "components/LogForm";
 import useLogForm from "hooks/useLogForm";
 import { useSelector } from "react-redux";
 import LogFormHeader from "components/LogFormHeader";
-import { getAppState } from "state/redux/slices/app";
 import useCreateRoastStatus from "hooks/useCreateRoastStatus";
+import { getRoastsState } from "providers/redux/slices/roasts";
 // MUI Imports
 import Card from "@mui/material/Card";
 import Container from "@mui/material/Container";
@@ -18,7 +18,7 @@ import CardContent from "@mui/material/CardContent";
  */
 const NewLog: React.FC<INewLogProps> = () => {
   // Global State
-  const { createRoastStatus } = useSelector(getAppState);
+  const { createRoastStatus } = useSelector(getRoastsState);
 
   // Form Data & Functions
   const {

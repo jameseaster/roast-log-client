@@ -1,13 +1,13 @@
 // Imports
 import App from "./App";
 import theme from "./theme";
-import store from "state/redux/store";
-import { Provider } from "react-redux";
+import store from "providers/redux/store";
 import { SnackbarProvider } from "notistack";
 import { createRoot } from "react-dom/client";
-import { AuthProvider } from "state/auth/provider";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
+import { AuthProvider } from "providers/auth/provider";
+import { Provider as ReduxProvider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -19,7 +19,7 @@ const queryClient = new QueryClient();
 
 root.render(
   <SnackbarProvider autoHideDuration={3500}>
-    <Provider store={store}>
+    <ReduxProvider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AuthProvider>
@@ -30,6 +30,6 @@ root.render(
           </QueryClientProvider>
         </AuthProvider>
       </ThemeProvider>
-    </Provider>
+    </ReduxProvider>
   </SnackbarProvider>
 );

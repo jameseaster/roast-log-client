@@ -10,12 +10,12 @@ import {
 } from "providers/redux/slices/roasts";
 
 /**
- * useDeleteRoastStatus - creates a snack for the status update when deleting a roast log
+ * useReadRoastsStatus - creates a snack for the status update when deleting a roast log
  */
-const useDeleteRoastStatus = (onSuccess?: VoidFunction | undefined) => {
+const useReadRoastsStatus = (onSuccess?: VoidFunction | undefined) => {
   // Global State
   const dispatch = useAppDispatch();
-  const { deleteRoastStatus } = useSelector(getRoastsState);
+  const { readRoastStatus } = useSelector(getRoastsState);
 
   // Hooks
   const { createSnack } = useSnacks();
@@ -28,21 +28,20 @@ const useDeleteRoastStatus = (onSuccess?: VoidFunction | undefined) => {
 
   // Create snack and call on delete if status is "success"
   useEffect(() => {
-    if (deleteRoastStatus === "success") {
-      stableSnack("Roast log deleted", "success");
+    if (readRoastStatus === "success") {
       dispatch({
         type: clearRoastStatus.type,
-        payload: "DELETE",
+        payload: "GET",
       });
       onSuccess && onSuccess();
-    } else if (deleteRoastStatus === "error") {
-      stableSnack("Failed to delete roast log", "error");
+    } else if (readRoastStatus === "error") {
+      stableSnack("Failed to fetch roast logs", "error");
       dispatch({
         type: clearRoastStatus.type,
-        payload: "DELETE",
+        payload: "GET",
       });
     }
-  }, [deleteRoastStatus, stableSnack, dispatch, onSuccess]);
+  }, [readRoastStatus, stableSnack, dispatch, onSuccess]);
 };
 
-export default useDeleteRoastStatus;
+export default useReadRoastsStatus;

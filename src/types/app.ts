@@ -1,3 +1,7 @@
+export type RequestMethod = "GET" | "POST" | "PATCH" | "DELETE";
+
+export type GlobalStateStatus = "loading" | "error" | "success" | null;
+
 export type ButtonThemeVariantMUI =
   | "text"
   | "outlined"
@@ -34,6 +38,7 @@ export interface IFormState {
   roastedWeight: string;
   dateTime: Date | null;
 }
+
 export interface IReqBody {
   country: string;
   region: string;

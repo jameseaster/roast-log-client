@@ -3,7 +3,8 @@ import React from "react";
 import { ITabs } from "./types";
 import { style } from "./style";
 import TabPanel from "./TabPannel";
-import useRequestRoasts from "hooks/useRequestRoasts";
+import useReadRoasts from "hooks/useReadRoasts";
+import useReadRoastsStatus from "hooks/useReadRoastsStatus";
 // MUI
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -21,7 +22,9 @@ const Tabs: React.FC<ITabs> = ({ pages }) => {
   // Event handler
   const handleChange = (i: number) => setValue(i);
   // Request roast data when user signs in
-  useRequestRoasts();
+  useReadRoasts();
+  // Updates status of fetching roast logs
+  useReadRoastsStatus();
 
   return (
     <Box sx={{ width: "100%" }}>

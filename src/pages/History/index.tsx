@@ -4,7 +4,7 @@ import { style } from "./style";
 import Table from "components/Table";
 import { IHistoryProps } from "./types";
 import { useSelector } from "react-redux";
-import { roastData } from "state/redux/slices/app";
+import { getRoastsState, getAllRoasts } from "providers/redux/slices/roasts";
 // MUI Imports
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
@@ -17,14 +17,13 @@ import CardContent from "@mui/material/CardContent";
  */
 const History: React.FC<IHistoryProps> = () => {
   // Global State
-  const { roasts, loadingRoasts, loadingRoastsError } = useSelector(roastData);
+  const { readRoastStatus } = useSelector(getRoastsState);
+  const { allRoasts } = useSelector(getAllRoasts);
 
   return (
-    <Container
-      sx={loadingRoasts || loadingRoastsError ? style.container : style.table}
-    >
+    <Container sx={readRoastStatus !== null ? style.container : style.table}>
       {/* Loading state */}
-      {loadingRoasts && (
+      {readRoastStatus === "loading" && (
         <Card sx={style.card}>
           <CardContent>
             <Stack spacing={2}>
@@ -35,7 +34,7 @@ const History: React.FC<IHistoryProps> = () => {
       )}
 
       {/* Error state */}
-      {loadingRoastsError && (
+      {readRoastStatus === "error" && (
         <Card sx={style.card}>
           <CardContent>
             <Stack spacing={2}>
@@ -46,10 +45,10 @@ const History: React.FC<IHistoryProps> = () => {
       )}
 
       {/* Data table */}
-      {!loadingRoasts && !loadingRoastsError && roasts && (
+      {readRoastStatus === null && !!allRoasts.length && (
         <Card sx={style.tableCard}>
           <CardContent sx={style.tableCardContent}>
-            <Table rows={roasts || []} />
+            <Table rows={allRoasts} />
           </CardContent>
         </Card>
       )}
