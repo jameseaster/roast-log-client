@@ -108,6 +108,7 @@ const useLogForm = (closeDialogsClearForm?: VoidFunction) => {
     if (lastRoast) {
       setForm((f) => ({
         ...initialFormState,
+        dateTime: new Date(),
         region: lastRoast?.region,
         country: lastRoast?.country,
         process: lastRoast?.process,

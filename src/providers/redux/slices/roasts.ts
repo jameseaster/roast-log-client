@@ -108,6 +108,7 @@ const slice = createSlice({
       const { [idToRemove]: _, ...rest } = state.byId;
       state.byId = rest;
       state.allIds = state.allIds.filter((id) => id !== idToRemove);
+      state.nextRoastNumber = state.nextRoastNumber - 1;
       state.deleteRoastStatus = "success";
     },
   },
