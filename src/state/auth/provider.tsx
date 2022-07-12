@@ -2,16 +2,16 @@
 import API from "api/axios";
 import constants from "utils/constants";
 import useSnacks from "hooks/useSnacks";
-import { AuthContext } from "./authContext";
+import { AuthContext } from "./context";
 import { useState, useEffect } from "react";
 import {
   ISignin,
   ISignout,
   IRegister,
   IAuthProviderProps,
-} from "../types/auth";
+} from "../../types/auth";
 
-// TODO: CONVERT TO REACT QUERY //
+// TODO: CONVERT TO UTILIZE REDUX API MIDDLEWARE //
 
 /**
  * Auth Provider Component

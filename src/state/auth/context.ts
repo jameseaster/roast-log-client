@@ -1,6 +1,6 @@
 // Imports
 import React from "react";
-import { IAuthContext } from "../types/auth";
+import { IAuthContext } from "../../types/auth";
 
 // Auth Default Context
 export const AuthContext = React.createContext<IAuthContext>(null!);

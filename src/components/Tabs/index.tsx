@@ -3,6 +3,7 @@ import React from "react";
 import { ITabs } from "./types";
 import { style } from "./style";
 import TabPanel from "./TabPannel";
+import useRequestRoasts from "hooks/useRequestRoasts";
 // MUI
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -19,6 +20,8 @@ const Tabs: React.FC<ITabs> = ({ pages }) => {
   const isNotSmall = useMediaQuery((theme: any) => theme.breakpoints.up("sm"));
   // Event handler
   const handleChange = (i: number) => setValue(i);
+  // Request roast data when user signs in
+  useRequestRoasts();
 
   return (
     <Box sx={{ width: "100%" }}>

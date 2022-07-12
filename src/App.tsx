@@ -6,7 +6,7 @@ import History from "pages/History";
 import Register from "pages/Register";
 import AppBar from "components/AppBar";
 import Dashboard from "pages/Dashboard";
-import { useAuthContext } from "state/authContext";
+import { useAuthContext } from "state/auth/context";
 import ProtectedRoute from "components/ProtectedRoute";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
